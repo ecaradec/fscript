@@ -194,7 +194,7 @@ struct FarrObject : CComObjectRoot,
     {
         // window for handling timers    
         if(g_msgHwnd==0) {
-            g_msgHwnd=CreateWindowEx(0, g_fscriptClassName, "FScript", 0, 0, 0, 0, 0, 0, 0, 0 ,0);
+            g_msgHwnd=CreateWindowEx(0, "STATIC", "FScriptTimer", 0, 0, 0, 0, 0, 0, 0, 0 ,0);
             SetWindowLong(g_msgHwnd, GWL_WNDPROC, (UINT_PTR)FScriptTimerProc);
         }
 

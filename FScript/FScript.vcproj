@@ -68,7 +68,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="&quot;C:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.dll&quot;"
+				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\MSVC_TestPlugin.def"
 				GenerateDebugInformation="true"

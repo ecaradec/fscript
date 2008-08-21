@@ -16,6 +16,7 @@ interface IFARR : IDispatch
     HRESULT setStrValue([in] BSTR command, [in,defaultvalue("")] BSTR value);
     HRESULT debug([in] BSTR txt);
     HRESULT setInterval([in] UINT id, [in] UINT elapse, [in] IDispatch *pFunc);
+    HRESULT killInterval([in] UINT id);
     HRESULT showOptions();
 };
 
