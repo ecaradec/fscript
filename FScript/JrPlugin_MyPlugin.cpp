@@ -7,23 +7,22 @@
 #include <io.h>
 #include <atlbase.h>
 #include <atlcom.h>
-
 #include <atlstr.h>
+#include "atlsafe.h"
 #include <vector>
 #include <map>
 
 #include "fscript_h.h"
 #include "fscript_i.c"
 
+#import "msxml4.dll"
+
 // our partner header which includes the funcs we need in the right way
 #include "JrPlugin_MyPlugin.h"
 
+#import "msscript.ocx" raw_interfaces_only // msscript.ocx 
+using namespace MSScriptControl;
 
-
-// see JrPluginFuncs_FARR.h for function definitions we will be implementing here
-// global state info
-E_SearchStateT current_searchstate=E_SearchState_Stopped;
-BOOL current_lockstate=FALSE;
 
 struct Result
 {
@@ -39,42 +38,29 @@ struct Result
     E_ResultPostProcessingT matching;
 };
 
-std::vector<Result> tmpResultsA;
-std::vector<Result> tmpResultsB;
-std::vector<Result> *results=&tmpResultsA;
-int g_queryKey=0;
 
-//std::map<CString, Result> refresults;
-//
+// see JrPluginFuncs_FARR.h for function definitions we will be implementing here
+// global state info
+E_SearchStateT                        g_current_searchstate=E_SearchState_Stopped;
+BOOL                                  g_current_lockstate=FALSE;
+std::vector<Result>                   g_tmpResultsA;
+std::vector<Result>                   g_tmpResultsB;
+std::vector<Result>                  *g_results=&g_tmpResultsA;
+int                                   g_queryKey=0;
+HWND                                  g_msgHwnd=0;
+CString                               g_currentDirectory;
+std::map<UINT,CComPtr<IDispatch> >    g_pendingTimers;
+WNDCLASS                              g_dlgclass;
+HWND                                  g_optionDlgHwnd=0;
+char                                  g_fscriptDlgClassName[256];
+char                                  g_fscriptClassName[256];
+CString                               g_pluginname;
+
 // farr-specific function pointer so we can call to inform the host when we have results
 Fp_GlobalPluginCallback_NotifySearchStateChanged callbackfp_notifysearchstatechanged=NULL;
 
-// These functions are our plugin-specific versions of the generic
-//  functions exported by the generic DLL shell.
-// See JrPlugin_GenericShell.h and .cpp for descriptions of what these
-//  functions are supposed to do.
-BOOL MyPlugin_DllEntryPoint(HINSTANCE hinst, unsigned long reason, void* lpReserved)
-{
-    switch (reason)
-    {
-    case DLL_PROCESS_ATTACH:
-        break;
+void ShowOptionDialog();
 
-    case DLL_PROCESS_DETACH:
-        break;
-
-    case DLL_THREAD_ATTACH:
-        break;
-
-    case DLL_THREAD_DETACH:
-        break;
-    }
-    // success
-    return TRUE;
-}
-#include <stdio.h>
-#import "msscript.ocx" raw_interfaces_only // msscript.ocx 
-using namespace MSScriptControl;
 
 IScriptControlPtr pScriptControl;
 
@@ -83,6 +69,82 @@ struct FarrAtlModule : CAtlModule {
         return S_OK;
     }
 } _atlmodule;
+
+
+LRESULT __stdcall FScriptTimerProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    if(msg==WM_TIMER) {
+        g_pendingTimers[wparam].Invoke0(DISPID(0));
+    }
+    return CallWindowProc(g_dlgclass.lpfnWndProc,hwnd,msg,wparam,lparam); 
+}
+
+CComPtr<IXMLDOMDocument> g_optionsDlgDoc;
+LRESULT __stdcall FScriptDlgProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    if(msg==WM_COMMAND && wparam==0xFFFF) {
+
+        CComPtr<IXMLDOMNodeList> pList;
+        g_optionsDlgDoc->selectNodes(CComBSTR("options/*"), &pList);
+            
+        long len;
+        pList->get_length(&len);
+        for(int i=0;i<len;i++) {
+            CComPtr<IXMLDOMNode> pNode;
+            pList->get_item(i, &pNode);
+            CComPtr<IXMLDOMNamedNodeMap> pAttMap;
+            pNode->get_attributes(&pAttMap);
+
+            CComPtr<IXMLDOMNode> pValue;
+            pAttMap->getNamedItem(CComBSTR("value"), &pValue);
+            TCHAR buff[4096];
+            GetDlgItemText(hwnd, i, buff, 4096);
+            pValue->put_text(CComBSTR(buff));
+        }
+
+        g_optionsDlgDoc->save(CComVariant(g_currentDirectory+"\\options.xml"));
+        g_optionsDlgDoc=0;
+        DestroyWindow(hwnd);
+
+        CComVariant ret;
+        CComSafeArray<VARIANT> ary(ULONG(0));
+        HRESULT hr=pScriptControl->Run(CComBSTR(L"onOptionsChanged"), ary.GetSafeArrayPtr(), &ret);
+
+        g_optionDlgHwnd=0;
+    } else if(msg==WM_COMMAND && wparam==0xFFFE) {
+        g_optionsDlgDoc=0;
+        DestroyWindow(hwnd);
+        g_optionDlgHwnd=0;
+    }
+
+    return CallWindowProc(g_dlgclass.lpfnWndProc,hwnd,msg,wparam,lparam); 
+}
+
+WNDCLASS g_editClass;
+LRESULT __stdcall EditProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    if(msg==WM_CHAR && wparam==VK_TAB) {
+        HWND hdlg=GetAncestor(hwnd, GA_PARENT);
+        HWND hNext=GetNextDlgTabItem(hdlg, hwnd, GetKeyState(VK_SHIFT)&0x8000);
+        SetFocus(hNext);
+        SendMessage(hNext, EM_SETSEL, 0, -1);
+        return S_OK;
+    }
+    return CallWindowProc(g_editClass.lpfnWndProc, hwnd, msg, wparam, lparam);
+}
+
+WNDCLASS g_btnClass;
+LRESULT __stdcall ButtonProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    if(msg==WM_CHAR && wparam==VK_TAB) {
+        HWND hdlg=GetAncestor(hwnd, GA_PARENT);
+        HWND hNext=GetNextDlgTabItem(hdlg, hwnd, GetKeyState(VK_SHIFT)&0x8000);
+        SetFocus(hNext);
+        SendMessage(hNext, EM_SETSEL, 0, -1);
+        return S_OK;
+    }
+    return CallWindowProc(g_btnClass.lpfnWndProc, hwnd, msg, wparam, lparam);
+}
 
 struct FarrObject : CComObjectRoot,  
                     IDispatchImpl<IFARR, &__uuidof(IFARR), &LIBID_FARRLib, 0xFFFF, 0xFFFF>
@@ -96,7 +158,7 @@ struct FarrObject : CComObjectRoot,
         // ignore previous query
         if(querykey!=g_queryKey)
             return S_FALSE;
-        results->push_back(Result(CString(title), CString(path), CString(icon), E_EntryTypeT(entrytype), E_ResultPostProcessingT(resultpostprocessing), score));
+        g_results->push_back(Result(CString(title), CString(path), CString(icon), E_EntryTypeT(entrytype), E_ResultPostProcessingT(resultpostprocessing), score));
         return S_OK;
     }
     STDMETHOD(setState)(UINT querykey, UINT s)
@@ -105,7 +167,7 @@ struct FarrObject : CComObjectRoot,
         if(querykey!=g_queryKey)
             return S_FALSE;
 
-        current_searchstate=(E_SearchStateT)s;
+        g_current_searchstate=(E_SearchStateT)s;
         ExecuteCallback_SearchStateChanged();
         return S_OK;
     }
@@ -125,37 +187,58 @@ struct FarrObject : CComObjectRoot,
     }
     STDMETHOD(debug)(BSTR txt)
     {
-        MessageBox(0, CString(txt), "", MB_OK);
+        MessageBox(0, CString(txt), g_pluginname, MB_OK);
+        return S_OK;
+    }
+    STDMETHOD(setInterval)(UINT id, UINT elapse, IDispatch *pFunc)
+    {
+        // window for handling timers    
+        if(g_msgHwnd==0) {
+            g_msgHwnd=CreateWindowEx(0, g_fscriptClassName, "FScript", 0, 0, 0, 0, 0, 0, 0, 0 ,0);
+            SetWindowLong(g_msgHwnd, GWL_WNDPROC, (UINT_PTR)FScriptTimerProc);
+        }
+
+        g_pendingTimers[id]=pFunc;
+        SetTimer(g_msgHwnd, id, elapse, 0);
+        return S_OK;
+    }
+    STDMETHOD(killInterval)(UINT id)
+    {
+        KillTimer(g_msgHwnd, id);
+        g_pendingTimers.erase(id);
+        return S_OK;
+    }
+    STDMETHOD(showOptions)()
+    {
+        ShowOptionDialog();
         return S_OK;
     }
 };
-
-CString currentDirectory;
 
 void InitializeScriptControl()
 {    
     pScriptControl.CreateInstance(__uuidof(ScriptControl));    
 	pScriptControl->put_AllowUI(VARIANT_TRUE);
+    pScriptControl->put_Timeout(-1);
+    VARIANT_BOOL noSafeSubset(VARIANT_FALSE);
+    pScriptControl->get_UseSafeSubset(&noSafeSubset);
     
     CString language="";
-    FILE *f=0;  
-    f=fopen(currentDirectory+"\\fscript.js", "rb");
-    language="JScript";
-
-    /*if(f=fopen(currentDirectory+"\\fscript.js", "rb")) {
+    FILE *f=0;
+    if(f=fopen(g_currentDirectory+"\\fscript.js", "rb")) {
         language="JScript";
-    } else if(f=fopen(currentDirectory+"\\fscript.vbs", "rb")) {
+    } else if(f=fopen(g_currentDirectory+"\\fscript.vbs", "rb")) {
         language="VBScript";
-    } else if(f=fopen(currentDirectory+"\\fscript.rb", "rb")) {
+    } else if(f=fopen(g_currentDirectory+"\\fscript.rb", "rb")) {
         language="RubyScript";
-    } else if(f=fopen(currentDirectory+"\\fscript.py", "rb")) {
+    } else if(f=fopen(g_currentDirectory+"\\fscript.py", "rb")) {
         language="Python";
-    } else if(f=fopen(currentDirectory+"\\fscript.pl", "rb")) {
+    } else if(f=fopen(g_currentDirectory+"\\fscript.pl", "rb")) {
         language="PerlScript";
-    }*/
+    }
 
     if(!f) {
-        MessageBox(0, "Can't open file "+currentDirectory+"\\fscript.js.", "FScript error", MB_OK);
+        MessageBox(0, "Can't open file "+g_currentDirectory+"\\fscript.js.", g_pluginname+" : Error", MB_OK);
         return;
     }
 
@@ -185,45 +268,149 @@ void InitializeScriptControl()
         CString desc(descBSTR);
 
         if(desc!="") {
-            MessageBox(0, "Script error in "+currentDirectory+"\\fscript.js : "+CString(desc), "FScript error", MB_OK);
+            MessageBox(0, "Script error in "+g_currentDirectory+"\\fscript.js : "+CString(desc), g_pluginname+" : Error", MB_OK);
             return;
         }
     }
+
+    try {
+        CComVariant v;
+        pScriptControl->Eval(CComBSTR("displayname"),&v);
+        g_pluginname = CString(v);
+    } catch(...) {
+        MessageBox(0, "displayname variable is missing in "+g_currentDirectory, "FScript error", MB_OK);
+    }
+}
+
+void ShowOptionDialog() {
+    if(g_optionDlgHwnd!=0) {
+        SetForegroundWindow(g_optionDlgHwnd);
+        return;
+    }
+    g_optionsDlgDoc.CoCreateInstance(CLSID_DOMDocument);
+    VARIANT_BOOL b;
+    g_optionsDlgDoc->load(CComVariant(g_currentDirectory+"\\options.xml"), &b);
+
+    CComPtr<IXMLDOMNodeList> pList;
+    g_optionsDlgDoc->selectNodes(CComBSTR("options/*"), &pList);
+        
+    g_optionDlgHwnd=CreateWindowEx(WS_EX_WINDOWEDGE, "#32770", g_pluginname, WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|DS_SETFONT, 0, 0, 0, 0, 0, 0, 0 ,0);
+    SetWindowLong(g_optionDlgHwnd, GWL_WNDPROC, (UINT_PTR)FScriptDlgProc);
+
+    HWND hwnd;
+    int y=5;
+    long len;
+    int maxExtent=0;
+    pList->get_length(&len);
+    for(int i=0;i<len;i++) {
+        CComPtr<IXMLDOMNode> pNode;
+        pList->get_item(i, &pNode);
+        CComPtr<IXMLDOMNamedNodeMap> pAttMap;
+        pNode->get_attributes(&pAttMap);
+        
+        CComPtr<IXMLDOMNode> pLabel;
+        pAttMap->getNamedItem(CComBSTR("label"), &pLabel); 
+        CComBSTR labelText;
+        pLabel->get_text(&labelText);
+
+        CComPtr<IXMLDOMNode> pValue;
+        pAttMap->getNamedItem(CComBSTR("value"), &pValue); 
+        CComBSTR valueText;
+        pValue->get_text(&valueText);
+
+        hwnd=CreateWindowA("Static", CString(labelText), WS_CHILD|WS_VISIBLE, 5, y, 150, 20, g_optionDlgHwnd, (HMENU)0xF000+i, 0, 0);
+        SendMessage(hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
+        
+        hwnd=CreateWindowA("Edit", CString(valueText), WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP|ES_AUTOHSCROLL, 160, y, 160, 20, g_optionDlgHwnd, (HMENU)i, 0, 0);
+        SendMessage(hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
+        SetWindowLong(hwnd, GWL_WNDPROC, (UINT_PTR)EditProc);
+
+        /*HDC hdc=GetDC(hwnd);
+        SIZE s;
+        GetTextExtentExPoint(hdc, CString(labelText), CString(labelText).GetLength(), 8192, 0, 0, &s);
+        ReleaseDC(hwnd,hdc);
+        maxExtent=max(s.cx,maxExtent);*/
+
+        y+=25;
+    }
+
+    /*y=5;
+    for(int i=0;i<len;i++) {
+        SetWindowPos(GetDlgItem(g_optionDlgHwnd, 0xF000+i), 0, 5, y, maxExtent, 20, SWP_NOZORDER);
+        SetWindowPos(GetDlgItem(g_optionDlgHwnd, i), 0, maxExtent+5, y, 315-maxExtent, 20, SWP_NOZORDER);
+        y+=25;
+    }*/
+
+    hwnd=CreateWindowA("Button", "OK", WS_CHILD|WS_VISIBLE|BS_DEFPUSHBUTTON|WS_TABSTOP, 160, y, 160, 30, g_optionDlgHwnd, (HMENU)0xFFFF, 0, 0);
+    SendMessage(hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
+    SetWindowLong(hwnd, GWL_WNDPROC, (UINT_PTR)ButtonProc);
+
+    hwnd=CreateWindowA("Button", "Cancel", WS_CHILD|WS_VISIBLE|WS_TABSTOP, 5, y, 150, 30, g_optionDlgHwnd, (HMENU)0xFFFE, 0, 0);
+    SendMessage(hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
+    SetWindowLong(hwnd, GWL_WNDPROC, (UINT_PTR)ButtonProc);
+    y+=30;
+    
+    CPoint pos;
+    GetCursorPos(&pos);
+    HMONITOR hmon=MonitorFromPoint(pos, MONITOR_DEFAULTTONEAREST);
+    MONITORINFO mi;
+    mi.cbSize=sizeof(MONITORINFO);
+    GetMonitorInfo(hmon, &mi);        
+    
+    SendMessage(g_optionDlgHwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
+    //SelectObject(GetWindowDC(g_optionDlgHwnd), GetStockObject(SYSTEM_FONT));
+    SetWindowPos(g_optionDlgHwnd, 0, (mi.rcWork.left+mi.rcWork.right)/2-115, (mi.rcWork.top+mi.rcWork.bottom)/2-(y+30)/2, 330, y+30, SWP_SHOWWINDOW);
 }
 
 BOOL MyPlugin_DoInit()
 {
+    //OutputDebugString("MyPlugin_DoInit\n");
     FarrAtlModule::m_libid=LIBID_FARRLib;
     HRESULT hr = CoInitialize(NULL);
-    GetCurrentDirectory(MAX_PATH, currentDirectory.GetBufferSetLength(MAX_PATH));
-    currentDirectory.ReleaseBuffer();
+    GetCurrentDirectory(MAX_PATH, g_currentDirectory.GetBufferSetLength(MAX_PATH));
+    g_currentDirectory.ReleaseBuffer();
+
+    GetClassInfo(0, "Edit",   &g_editClass);
+    GetClassInfo(0, "Button", &g_btnClass);
+    GetClassInfo(0, "#32770", &g_dlgclass);
+
     InitializeScriptControl();
+
     CComVariant ret;
-    CComPtr<IDispatch> pCO;
-    pScriptControl->get_CodeObject(&pCO);
-    if(pCO)
-        pCO.Invoke1(L"onInit", &CComVariant(currentDirectory), &ret);
+    CComSafeArray<VARIANT> ary;
+    ary.Add(CComVariant(g_currentDirectory));
+    pScriptControl->Run(CComBSTR(L"onInit"), ary.GetSafeArrayPtr(), &ret);
+
     return TRUE;
 }
 BOOL MyPlugin_DoShutdown()
 {
+    //OutputDebugString("MyPlugin_DoShutdown\n");
     // success
     pScriptControl->Reset();
     pScriptControl=0;
+    if(g_msgHwnd)
+        DestroyWindow(g_msgHwnd);
+    if(g_optionDlgHwnd)
+        DestroyWindow(g_optionDlgHwnd);
+
+    g_pendingTimers.clear();
+
     CoUninitialize();
     return TRUE;
 }
 BOOL MyPlugin_GetStrVal(const char* varname,char *destbuf, int maxlen)
 {    
+    //OutputDebugString("MyPlugin_GetStrVal\n");
     CComVariant v;
     try
-    {	
+    {
         pScriptControl->Eval(CComBSTR(varname),&v);
         strcpy(destbuf,CString(v));
         return TRUE;
     } catch(...) {
-        if(currentDirectory!="")
-            MessageBox(0, "FARR variable '"+CString(varname)+"' was not returned for "+currentDirectory+"\\fscript.js", "FScript error", MB_OK);
+        if(g_currentDirectory!="")
+            MessageBox(0, "FARR variable '"+CString(varname)+"' was not returned for "+g_currentDirectory+"\\fscript.js", "FScript error", MB_OK);
         strcpy(destbuf,CString("FScript"));
         return TRUE;
     }
@@ -232,6 +419,7 @@ BOOL MyPlugin_GetStrVal(const char* varname,char *destbuf, int maxlen)
 }
 BOOL MyPlugin_SetStrVal(const char* varname, void *val)
 {
+    //OutputDebugString("MyPlugin_SetStrVal\n");
     // farr host will pass us function pointer we will call
     if (strcmp(varname,DEF_FieldName_NotifySearchCallbackFp)==0)
         callbackfp_notifysearchstatechanged = (Fp_GlobalPluginCallback_NotifySearchStateChanged)val;
@@ -240,6 +428,7 @@ BOOL MyPlugin_SetStrVal(const char* varname, void *val)
 }
 BOOL MyPlugin_SupportCheck(const char* testname, int version)
 {
+    //OutputDebugString("MyPlugin_SupportCheck\n");
     // ATTN: we support farr interface
     if (strcmp(testname,DEF_FARRAPI_IDENTIFIER)==0)
         return TRUE;
@@ -249,12 +438,16 @@ BOOL MyPlugin_SupportCheck(const char* testname, int version)
 }
 BOOL MyPlugin_DoAdvConfig()
 {
+    //OutputDebugString("MyPlugin_DoAdvConfig\n");
     // success
-    ShellExecuteA(NULL, "edit", currentDirectory+"\\fscript.js", NULL,NULL, SW_SHOWNORMAL);
+    //ShellExecuteA(NULL, "edit", g_currentDirectory+"\\fscript.js", NULL,NULL, SW_SHOWNORMAL);
+    
+    ShowOptionDialog();
     return TRUE;
 }
 BOOL MyPlugin_DoShowReadMe()
 {
+    //OutputDebugString("MyPlugin_DoShowReadMe\n");
     // by default show the configured readme file
     char fname[MAX_PATH+1];
     strcpy(fname, dlldir);
@@ -267,6 +460,7 @@ BOOL MyPlugin_DoShowReadMe()
 }
 BOOL MyPlugin_SetState(int newstateval)
 {
+    //OutputDebugString("MyPlugin_SetState\n");
     // usually there is nothing to do here
 
     // success
@@ -281,6 +475,7 @@ BOOL MyPlugin_SetState(int newstateval)
 //
 PREFUNCDEF BOOL EFuncName_Ask_WantFeature(E_WantFeaturesT featureid)
 {
+    //OutputDebugString("EFuncName_Ask_WantFeature\n");
     //return featureid==E_WantFeatures_searchinput_regex;
     switch (featureid)
     {
@@ -329,20 +524,20 @@ PREFUNCDEF BOOL EFuncName_Ask_WantFeature(E_WantFeaturesT featureid)
 //
 // returns TRUE only if the plugin decides now that no more searching should be done by any other plugin or builtin
 //
-// NOTE: if asynchronous searching is to be done, make sure to only set current_searchstate=E_SearchState_Stopped when done!
+// NOTE: if asynchronous searching is to be done, make sure to only set g_current_searchstate=E_SearchState_Stopped when done!
 //
 
 
 PREFUNCDEF BOOL EFuncName_Inform_SearchBegins(const char* searchstring_raw, const char *searchstring_lc_nokeywords, BOOL explicitinvocation)
 {
+    g_results->clear();
     CComVariant ret;
-
-    //refresults.clear();
-    results->clear();
-    CComPtr<IDispatch> pCO;
-    pScriptControl->get_CodeObject(&pCO);
-    CComVariant varArgs[] = { CComVariant(searchstring_lc_nokeywords), CComVariant(searchstring_raw), CComVariant(BOOL(explicitinvocation)), CComVariant(UINT(g_queryKey)) }; 
-    HRESULT hr=pCO.InvokeN(L"onSearchBegin", varArgs, _countof(varArgs), &ret);    
+    CComSafeArray<VARIANT> ary;
+    ary.Add(CComVariant(CComVariant(g_queryKey)));
+    ary.Add(CComVariant(CComVariant(explicitinvocation)));
+    ary.Add(CComVariant(CComVariant(searchstring_raw)));
+    ary.Add(CComVariant(CComVariant(searchstring_lc_nokeywords)));
+    HRESULT hr=pScriptControl->Run(CComBSTR(L"onSearchBegin"), ary.GetSafeArrayPtr(), &ret);
 
     return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
 } 
@@ -356,18 +551,17 @@ PREFUNCDEF BOOL EFuncName_Inform_SearchBegins(const char* searchstring_raw, cons
 //
 // returns TRUE only if the plugin decides now that no more searching should be done by any other plugin or builtin
 //
-// NOTE: if asynchronous searching is to be done, make sure to only set current_searchstate=E_SearchState_Stopped when done!
+// NOTE: if asynchronous searching is to be done, make sure to only set g_current_searchstate=E_SearchState_Stopped when done!
 //
 PREFUNCDEF BOOL EFuncName_Inform_RegexSearchMatch(const char* searchstring_raw, const char *searchstring_lc_nokeywords, int regexgroups, char** regexcharps)
 {
+    g_results->clear();
     CComVariant ret;
-
-    //refresults.clear();
-    results->clear();
-    CComPtr<IDispatch> pCO;
-    pScriptControl->get_CodeObject(&pCO);
-    CComVariant varArgs[] = { CComVariant(searchstring_lc_nokeywords), CComVariant(searchstring_raw), CComVariant(UINT(g_queryKey)) }; 
-    HRESULT hr=pCO.InvokeN(L"onRegexSearchMatch", varArgs, _countof(varArgs), &ret);    
+    CComSafeArray<VARIANT> ary;
+    ary.Add(CComVariant(CComVariant(g_queryKey)));
+    ary.Add(CComVariant(CComVariant(searchstring_raw)));
+    ary.Add(CComVariant(CComVariant(searchstring_lc_nokeywords)));
+    pScriptControl->Run(CComBSTR(L"onRegexSearchMatch"), ary.GetSafeArrayPtr(), &ret);
 
     return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
 }
@@ -382,23 +576,26 @@ PREFUNCDEF BOOL EFuncName_Inform_RegexSearchMatch(const char* searchstring_raw, 
 //
 PREFUNCDEF BOOL EFuncName_Request_ItemResultByIndex(int resultindex, char *destbuf_path, char *destbuf_caption, char *destbuf_groupname, char *destbuf_iconfilename, void** tagvoidpp, int maxlen, E_ResultPostProcessingT *resultpostprocmodep, int *scorep, E_EntryTypeT *entrytypep)
 {
+    //OutputDebugString("EFuncName_Request_ItemResultByIndex\n");
     strcpy(destbuf_groupname,"");
     *tagvoidpp=NULL;    
     
-    if(resultindex>results->size())
+    if(resultindex>g_results->size())
         return false;
 
-    Result &r((*results)[resultindex]);
+    Result &r((*g_results)[resultindex]);
     strncpy(destbuf_caption, r.title.GetBuffer(), maxlen);
     strncpy(destbuf_path, r.path.GetBuffer(), maxlen);
     if(r.icon!="")
-        strncpy(destbuf_iconfilename, (currentDirectory+"\\"+r.icon).GetBuffer(), maxlen);
+        strncpy(destbuf_iconfilename, (g_currentDirectory+"\\"+r.icon).GetBuffer(), maxlen);
     else
         strncpy(destbuf_iconfilename, "", maxlen);
 
     *entrytypep=r.entrytype;
     *resultpostprocmodep=r.matching;
-    *scorep=r.score;    
+    *scorep=r.score;
+
+    //OutputDebugString("\tItem : "+r.title+"\n");
 
     // ok filled one
     return TRUE;
@@ -407,18 +604,18 @@ PREFUNCDEF BOOL EFuncName_Request_ItemResultByIndex(int resultindex, char *destb
 
 // Host informs us that a search has completed or been interrupted, and we should stop any processing we might be doing assynchronously
 //
-// NOTE: make sure to set current_searchstate=E_SearchState_Stopped;
+// NOTE: make sure to set g_current_searchstate=E_SearchState_Stopped;
 //
 PREFUNCDEF void EFuncName_Inform_SearchEnds()
 {
+    //OutputDebugString("EFuncName_Inform_SearchEnds\n");
     g_queryKey++;
 
     // stop search and set this
-    current_searchstate=E_SearchState_Stopped;
+    g_current_searchstate=E_SearchState_Stopped;
 
     // ATTN: test clear results
-    //refresults.clear();
-    results->clear();
+    g_results->clear();
 
     // notify host that our state has changed
     ExecuteCallback_SearchStateChanged();    
@@ -433,15 +630,17 @@ PREFUNCDEF void EFuncName_Inform_SearchEnds()
 //
 PREFUNCDEF E_ResultAvailableStateT EFuncName_Ask_IsAnyResultAvailable()
 {
+    //OutputDebugString("EFuncName_Ask_IsAnyResultAvailable\n");
     // this will be tracked elsewhere    
-    return results->size()?E_ResultAvailableState_ItemResuls:E_ResultAvailableState_None;
+    return g_results->size()?E_ResultAvailableState_ItemResuls:E_ResultAvailableState_None;
 }
 
 // Host wants to know how many item results are available
 PREFUNCDEF int EFuncName_Ask_HowManyItemResultsAreReady()
 {
+    //OutputDebugString("EFuncName_Ask_HowManyItemResultsAreReady\n");
     // this will be tracked elsewhere
-    return results->size();
+    return g_results->size();
 }
 
 // Host calls this before iterating through the result requests
@@ -455,21 +654,22 @@ PREFUNCDEF int EFuncName_Ask_HowManyItemResultsAreReady()
 //
 PREFUNCDEF BOOL EFuncName_Request_LockResults(BOOL dolock)
 {
+    //OutputDebugString("EFuncName_Request_LockResults\n");
     // set lock
-    current_lockstate=dolock;
+    g_current_lockstate=dolock;
 
     if (dolock==false)
     {
         //for(std::vector<Result>::iterator it=results->begin(); it!=results->end(); it++)
         //    refresults[it->title]=*it;
 
-        if(results==&tmpResultsA)
-            results=&tmpResultsB;
+        if(g_results==&g_tmpResultsA)
+            g_results=&g_tmpResultsB;
         else
-            results=&tmpResultsA;
+            g_results=&g_tmpResultsA;
         
         // on unlocking they have retrieved all the results, so CLEAR the results or they will be found again
-        results->clear();
+        g_results->clear();
         // notify host that our state has changed
         ExecuteCallback_SearchStateChanged();        
     }
@@ -480,12 +680,14 @@ PREFUNCDEF BOOL EFuncName_Request_LockResults(BOOL dolock)
 // Host informs us that our window is about to appear
 PREFUNCDEF void EFuncName_Inform_WindowIsHiding(HWND hwndp)
 {
+    //OutputDebugString("EFuncName_Inform_WindowIsHiding\n");
     return;
 }
 
 // Host informs us that our window is about to disappear
 PREFUNCDEF void EFuncName_Inform_WindowIsUnHiding(HWND hwndp)
 {
+    //OutputDebugString("EFuncName_Inform_WindowIsUnHiding\n");
     return;
 }
 
@@ -497,8 +699,9 @@ PREFUNCDEF void EFuncName_Inform_WindowIsUnHiding(HWND hwndp)
 //
 PREFUNCDEF E_SearchStateT EFuncName_Ask_SearchState()
 {
+    //OutputDebugString("EFuncName_Ask_SearchState\n");
     // this will be tracked elsewhere
-    return current_searchstate;
+    return g_current_searchstate;
 }
 
 // Host is asking us to return a char* to a LONG result string
@@ -507,6 +710,7 @@ PREFUNCDEF E_SearchStateT EFuncName_Ask_SearchState()
 //  on the next call, or on search end, but we MUST keep it valid until then.
 PREFUNCDEF BOOL EFuncName_Request_TextResultCharp(char **charp)
 {
+    //OutputDebugString("EFuncName_Request_TextResultCharp\n");
     // signify we have none
     *charp=NULL;
 
@@ -522,6 +726,7 @@ PREFUNCDEF BOOL EFuncName_Request_TextResultCharp(char **charp)
 //
 PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const char* destbuf_caption, const char* destbuf_groupname, int pluginid,int thispluginid, int score, E_EntryTypeT entrytype, void* tagvoidp, BOOL *closeafterp)
 {
+    //OutputDebugString("EFuncName_Allow_ProcessTrigger\n");
     // does this plugin want to take over launching of this result?
     if (thispluginid!=pluginid)
     {
@@ -531,9 +736,10 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const c
     else
     {
         CComVariant ret;
-        CComPtr<IDispatch> pCO;
-        pScriptControl->get_CodeObject(&pCO);
-        pCO.Invoke2(L"onProcessTrigger", &CComVariant(destbuf_path), &CComVariant(destbuf_caption), &ret);
+        CComSafeArray<VARIANT> ary;
+        ary.Add(CComVariant(CComVariant(destbuf_path)));
+        ary.Add(CComVariant(CComVariant(destbuf_caption)));
+        pScriptControl->Run(CComBSTR(L"onProcessTrigger"), ary.GetSafeArrayPtr(), &ret);
 
         return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
     }
@@ -550,6 +756,7 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const c
 //
 PREFUNCDEF BOOL EFuncName_Do_AdjustResultScore(const char* itempath, int *scorep)
 {
+    //OutputDebugString("EFuncName_Do_AdjustResultScore\n");
     // we didnt modify it
     return FALSE;
 }
@@ -557,9 +764,11 @@ PREFUNCDEF BOOL EFuncName_Do_AdjustResultScore(const char* itempath, int *scorep
 // Helper Functions the plugin calls
 void ExecuteCallback_SearchStateChanged()
 {
+    //CString tmp; tmp.Format("ExecuteCallback_SearchStateChanged.\n\tavailables results : %d\n\tstate : %s\n", g_results->size(), g_current_searchstate==E_SearchState_Stopped?"Stopped":"Searching");
+    //OutputDebugString(tmp);
     // tell the host that our state or resultcount has changed
     if (callbackfp_notifysearchstatechanged)
     {
-        callbackfp_notifysearchstatechanged(hostptr,results->size(),current_searchstate);
+        callbackfp_notifysearchstatechanged(hostptr,g_results->size(),g_current_searchstate);
     }
 }
