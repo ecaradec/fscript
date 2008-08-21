@@ -55,6 +55,7 @@ HWND                                  g_optionDlgHwnd=0;
 char                                  g_fscriptDlgClassName[256];
 char                                  g_fscriptClassName[256];
 CString                               g_pluginname;
+HWND                                  g_comHwnd;
 
 // farr-specific function pointer so we can call to inform the host when we have results
 Fp_GlobalPluginCallback_NotifySearchStateChanged callbackfp_notifysearchstatechanged=NULL;
@@ -220,10 +221,34 @@ struct FarrObject : CComObjectRoot,
         ShowOptionDialog();
         return S_OK;
     }
+    STDMETHOD(exec)(BSTR file, BSTR parameters, BSTR curDir, VARIANT_BOOL *bSuccess)
+    {
+        *bSuccess = ShellExecute(0, "open", CString(file), CString(parameters), CString(curDir), SW_NORMAL)!=0?VARIANT_TRUE:VARIANT_FALSE;
+        return S_OK;
+    }
+    STDMETHOD(getIniValue)(BSTR file, BSTR section, BSTR value, BSTR def, BSTR *out)
+    {
+        CString o;
+        GetPrivateProfileString(CString(section), CString(value), CString(def), o.GetBufferSetLength(4096), 4096, CString(file)); o.ReleaseBuffer();
+        *out=o.AllocSysString();
+        return S_OK;
+    }
 };
 
+LRESULT __stdcall ComWndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    if(msg==WM_USER)
+    {
+        CComVariant ret;
+        CComSafeArray<VARIANT> ary(ULONG(0));
+        HRESULT hr=pScriptControl->Run(CComBSTR(L"onOptionsChanged"), ary.GetSafeArrayPtr(), &ret);
+        return S_OK;
+    }
+    return DefWindowProc(hwnd, msg, wparam, lparam);
+}
+
 void InitializeScriptControl()
-{    
+{
     pScriptControl.CreateInstance(__uuidof(ScriptControl));    
 	pScriptControl->put_AllowUI(VARIANT_TRUE);
     pScriptControl->put_Timeout(-1);
@@ -287,6 +312,9 @@ void InitializeScriptControl()
     } catch(...) {
         MessageBox(0, "displayname variable is missing in "+g_currentDirectory, "FScript error", MB_OK);
     }
+
+    g_comHwnd=CreateWindowEx(0, "Static", "FScript/"+g_pluginname, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    SetWindowLong(g_comHwnd, GWL_WNDPROC, (UINT_PTR)ComWndProc);
 }
 
 void ShowOptionDialog() {
@@ -396,6 +424,8 @@ BOOL MyPlugin_DoShutdown()
     // success
     pScriptControl->Reset();
     pScriptControl=0;
+    if(g_comHwnd)
+        DestroyWindow(g_comHwnd);
     if(g_msgHwnd)
         DestroyWindow(g_msgHwnd);
     if(g_optionDlgHwnd)
@@ -437,12 +467,14 @@ BOOL MyPlugin_SetStrVal(const char* varname, void *val)
     // farr host will pass us function pointer we will call
     if (strcmp(varname,DEF_FieldName_NotifySearchCallbackFp)==0)
         callbackfp_notifysearchstatechanged = (Fp_GlobalPluginCallback_NotifySearchStateChanged)val;
-
-    /*CComVariant ret;
-    CComSafeArray<VARIANT> ary;
-    ary.Add(CComVariant(CComVariant(varname)));
-    ary.Add(CComVariant(CComVariant(val)));
-    pScriptControl->Run(CComBSTR(L"onSetStrValue"), ary.GetSafeArrayPtr(), &ret);*/
+    else
+    {
+        CComVariant ret;
+        CComSafeArray<VARIANT> ary;
+        ary.Add(CComVariant(CComVariant(varname)));
+        ary.Add(CComVariant(CComVariant((char*)val)));
+        pScriptControl->Run(CComBSTR(L"onSetStrValue"), ary.GetSafeArrayPtr(), &ret);
+    }
     return FALSE;
 }
 BOOL MyPlugin_SupportCheck(const char* testname, int version)
