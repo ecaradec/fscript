@@ -474,6 +474,8 @@ BOOL MyPlugin_SetStrVal(const char* varname, void *val)
         ary.Add(CComVariant(CComVariant(varname)));
         ary.Add(CComVariant(CComVariant((char*)val)));
         pScriptControl->Run(CComBSTR(L"onSetStrValue"), ary.GetSafeArrayPtr(), &ret);
+        if(ret.vt==VT_BOOL && ret.boolVal == VARIANT_TRUE)
+            return TRUE;
     }
     return FALSE;
 }
