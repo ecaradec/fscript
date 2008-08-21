@@ -772,3 +772,27 @@ void ExecuteCallback_SearchStateChanged()
         callbackfp_notifysearchstatechanged(hostptr,g_results->size(),g_current_searchstate);
     }
 }
+
+PREFUNCDEF BOOL EFuncName_IdleTime(int elapsedmilliseconds)
+{
+    CComVariant ret;
+    CComSafeArray<VARIANT> ary;
+    ary.Add(CComVariant(CComVariant(elapsedmilliseconds)));
+    pScriptControl->Run(CComBSTR(L"onIdleTime"), ary.GetSafeArrayPtr(), &ret);
+
+    return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
+}
+
+
+PREFUNCDEF BOOL EFuncName_ReceiveKey(int Key, int altpressed, int controlpressed, int shiftpressed)
+{
+    CComVariant ret;
+    CComSafeArray<VARIANT> ary;
+    ary.Add(CComVariant(CComVariant(Key)));
+    ary.Add(CComVariant(CComVariant(altpressed)));
+    ary.Add(CComVariant(CComVariant(controlpressed)));
+    ary.Add(CComVariant(CComVariant(shiftpressed)));
+    pScriptControl->Run(CComBSTR(L"onReceiveKey"), ary.GetSafeArrayPtr(), &ret);
+
+    return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
+}

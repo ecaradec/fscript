@@ -88,7 +88,7 @@ char iconfpath[MAX_PATH];
 // NOTE: this would be a good place to call one-time allocation and object creation functions
 //
 
-PREFUNCDEF BOOL EFuncName_DoInit(const char* fullfilename, void* thisptr, const char *hostname, const char *hostversionstring, Fp_GlobalPluginCallback_GetStrVal incallbackfp_get_strval, Fp_GlobalPluginCallback_SetStrVal incallbackfp_set_strval)
+PREFUNCDEF BOOL PluginFunc_DoInit(const char* fullfilename, void* thisptr, const char *hostname, const char *hostversionstring, Fp_GlobalPluginCallback_GetStrVal incallbackfp_get_strval, Fp_GlobalPluginCallback_SetStrVal incallbackfp_set_strval)
 {
 	// save values
 	hostptr = thisptr;
@@ -119,7 +119,7 @@ PREFUNCDEF BOOL EFuncName_DoInit(const char* fullfilename, void* thisptr, const 
 // NOTE: You might release any resources you allocated previously here, or
 //  if you use visual forms, now would be the place to delete them.
 
-PREFUNCDEF BOOL EFuncName_DoShutDown()
+PREFUNCDEF BOOL PluginFunc_DoShutDown()
 {
 	// Program-Specific Initialization
 	return MyPlugin_DoShutdown();
@@ -164,7 +164,7 @@ PREFUNCDEF BOOL EFuncName_DoShutDown()
 //
 // NOTE: make sure your plugin returns values for common fields.
 //
-PREFUNCDEF BOOL EFuncName_GetStrVal(const char* varname,char *destbuf, int maxlen)
+PREFUNCDEF BOOL PluginFunc_GetStrVal(const char* varname,char *destbuf, int maxlen)
 {
 	// Some standard fields defined by #defines at top of file
 	// So you shouldn't really have to mess with this stuff
@@ -242,7 +242,7 @@ PREFUNCDEF BOOL EFuncName_GetStrVal(const char* varname,char *destbuf, int maxle
 // This is a simple function which may allow the host to set certain options and values
 // It may be unused by most plugins.
 // Returns false if the variable is unknown or can't be set
-PREFUNCDEF BOOL EFuncName_SetStrVal(const char* varname, void *val)
+PREFUNCDEF BOOL PluginFunc_SetStrVal(const char* varname, void *val)
 {
 	// plugin handles this
 	return MyPlugin_SetStrVal(varname,val);
@@ -283,7 +283,7 @@ PREFUNCDEF BOOL EFuncName_SetStrVal(const char* varname, void *val)
 //  of the host program and plugin and how to properly negotiate btwn them
 //  to take care of cases where versions are mismatched.
 
-PREFUNCDEF BOOL EFuncName_SupportCheck(const char* testname, int version)
+PREFUNCDEF BOOL PluginFunc_SupportCheck(const char* testname, int version)
 {
 	return MyPlugin_SupportCheck(testname,version);
 }
@@ -305,7 +305,7 @@ PREFUNCDEF BOOL EFuncName_SupportCheck(const char* testname, int version)
 //  though i expect to add a few callback functions for saving simple
 //  string and int values for you.
 
-PREFUNCDEF BOOL EFuncName_DoAdvConfig()
+PREFUNCDEF BOOL PluginFunc_DoAdvConfig()
 {
 	// this is all handled by plugin specific code
 	return MyPlugin_DoAdvConfig();
@@ -324,7 +324,7 @@ PREFUNCDEF BOOL EFuncName_DoAdvConfig()
 // NOTE: If your plugin supports advanced options, you have to return
 //  a non "" value for ThisPlugin_ReadMeString
 //
-PREFUNCDEF BOOL EFuncName_DoShowReadMe()
+PREFUNCDEF BOOL PluginFunc_DoShowReadMe()
 {
 	// this is all handled by plugin specific code
 	return MyPlugin_DoShowReadMe();
@@ -344,18 +344,15 @@ PREFUNCDEF BOOL EFuncName_DoShowReadMe()
 //
 // Predefined values are: DEF_PluginState_Disabled, DEF_PluginState_Enabled
 //
-// NOTE: the EFuncName_SetState(DEF_PluginState_Enabled) will be called
+// NOTE: the PluginFunc_SetState(DEF_PluginState_Enabled) will be called
 //  before first use of the plugin.
 
-PREFUNCDEF BOOL EFuncName_SetState(int newstateval)
+PREFUNCDEF BOOL PluginFunc_SetState(int newstateval)
 {
 	// this is all handled by plugin specific code
 	return MyPlugin_SetState(newstateval);
 }
 //-----------------------------------------------------------------------
-
-
-
 
 
 

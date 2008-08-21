@@ -98,7 +98,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\FindAndRunRobot\Plugins\Delicious\&quot;"
+				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\FindAndRunRobot\Plugins\FScriptSample\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -184,7 +184,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\FindAndRunRobot\Plugins\Delicious\&quot;"
+				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\FindAndRunRobot\Plugins\FScriptSample\&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -236,14 +236,6 @@
 			>
 			<File
 				RelativePath=".\JrPlugin_GenericShell.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\Source\JrPluginFuncs.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\Source\JrPluginFuncs_FARR.h"
 				>
 			</File>
 			<File

@@ -33,7 +33,7 @@
 // IMPORTANT: you need to customize there
 //
 #define ThisPlugin_DisplayName			"FScript"
-#define ThisPlugin_VersionString		"1.00.01"
+#define ThisPlugin_VersionString		"1.0.8"
 #define ThisPlugin_ReleaseDateString    "Apr 1st, 2007"
 #define ThisPlugin_Author			    "Emmanuel Caradec<emmanuel.caradec@gmail.com>"
 #define ThisPlugin_HomepageURL			""
