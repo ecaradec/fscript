@@ -409,11 +409,18 @@ BOOL MyPlugin_DoShutdown()
 BOOL MyPlugin_GetStrVal(const char* varname,char *destbuf, int maxlen)
 {    
     //OutputDebugString("MyPlugin_GetStrVal\n");
-    CComVariant v;
+    CComVariant ret;
     try
     {
-        pScriptControl->Eval(CComBSTR(varname),&v);
-        strcpy(destbuf,CString(v));
+        CComSafeArray<VARIANT> ary;
+        ary.Add(CComVariant(CComVariant(varname)));
+        pScriptControl->Run(CComBSTR(L"onGetStrValue"), ary.GetSafeArrayPtr(), &ret);
+        if(ret.vt!=VT_BSTR) {
+            ret.Clear();
+            pScriptControl->Eval(CComBSTR(varname),&ret);
+        }
+        strcpy(destbuf,CString(ret.bstrVal));
+        
         return TRUE;
     } catch(...) {
         if(g_currentDirectory!="")
@@ -431,6 +438,11 @@ BOOL MyPlugin_SetStrVal(const char* varname, void *val)
     if (strcmp(varname,DEF_FieldName_NotifySearchCallbackFp)==0)
         callbackfp_notifysearchstatechanged = (Fp_GlobalPluginCallback_NotifySearchStateChanged)val;
 
+    /*CComVariant ret;
+    CComSafeArray<VARIANT> ary;
+    ary.Add(CComVariant(CComVariant(varname)));
+    ary.Add(CComVariant(CComVariant(val)));
+    pScriptControl->Run(CComBSTR(L"onSetStrValue"), ary.GetSafeArrayPtr(), &ret);*/
     return FALSE;
 }
 BOOL MyPlugin_SupportCheck(const char* testname, int version)
@@ -816,6 +828,13 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const c
         ary.Add(CComVariant(CComVariant(destbuf_path)));
         ary.Add(CComVariant(CComVariant(destbuf_caption)));
         pScriptControl->Run(CComBSTR(L"onProcessTrigger"), ary.GetSafeArrayPtr(), &ret);
+
+        static const int TRIGGER_HANDLED=1;
+        static const int TRIGGER_CLOSE=2;
+        if(ret.vt==VT_I4) {
+            *closeafterp=((ret.intVal&TRIGGER_CLOSE)!=0);
+            return ((ret.intVal&TRIGGER_HANDLED)!=0);
+        }
 
         return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
     }
