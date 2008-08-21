@@ -13,6 +13,7 @@ interface IFARR : IDispatch
     HRESULT emitResult([in] UINT querykey, [in] BSTR title, [in] BSTR path, [in] BSTR icon, [in,defaultvalue(1)] int entrytype, [in,defaultvalue(2)] int resultpostprocessing, [in,defaultvalue(300)] int score);
     HRESULT setState([in] UINT querykey, [in] UINT s);
     HRESULT notifyStateChange([in] UINT querykey);
+    HRESULT getStrValue([in] BSTR command, [out,retval] BSTR *value);
     HRESULT setStrValue([in] BSTR command, [in,defaultvalue("")] BSTR value);
     HRESULT debug([in] BSTR txt);
     HRESULT setInterval([in] UINT id, [in] UINT elapse, [in] IDispatch *pFunc);

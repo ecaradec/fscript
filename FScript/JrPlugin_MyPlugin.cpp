@@ -185,6 +185,13 @@ struct FarrObject : CComObjectRoot,
         callbackfp_set_strval(hostptr, CString(command), (char*)(const char*)CString(value));
         return S_OK;
     }
+    STDMETHOD(getStrValue)(BSTR command, BSTR *output)
+    {        
+        CString tmp;
+        callbackfp_get_strval(hostptr, CString(command), tmp.GetBufferSetLength(256), 256); tmp.ReleaseBuffer();
+        *output = tmp.AllocSysString();
+        return S_OK;
+    }
     STDMETHOD(debug)(BSTR txt)
     {
         MessageBox(0, CString(txt), g_pluginname, MB_OK);
@@ -363,7 +370,7 @@ void ShowOptionDialog() {
 }
 
 BOOL MyPlugin_DoInit()
-{
+{    
     //OutputDebugString("MyPlugin_DoInit\n");
     FarrAtlModule::m_libid=LIBID_FARRLib;
     HRESULT hr = CoInitialize(NULL);
@@ -514,6 +521,15 @@ PREFUNCDEF BOOL EFuncName_Ask_WantFeature(E_WantFeaturesT featureid)
     return FALSE;
 }
 
+int GetAPIReleaseNum()
+{
+    CString releaseNum;
+    callbackfp_get_strval(hostptr, "Version.FARR_PLUGINAPI_RELEASENUM", releaseNum.GetBufferSetLength(256), 256); releaseNum.ReleaseBuffer();
+    if(releaseNum=="")
+        return 0;
+    return atoi(releaseNum);
+}
+
 // These functions are FARR-SPECIFIC and have no counterparts in the
 //  generic DLL shell.
 //
@@ -531,10 +547,12 @@ PREFUNCDEF BOOL EFuncName_Ask_WantFeature(E_WantFeaturesT featureid)
 //
 // NOTE: if asynchronous searching is to be done, make sure to only set g_current_searchstate=E_SearchState_Stopped when done!
 //
-
-/*
 PREFUNCDEF BOOL EFuncName_Inform_SearchBegins(const char* searchstring_raw, const char *searchstring_lc_nokeywords, BOOL explicitinvocation)
 {
+    // don't use this method if release is 3
+    if(GetAPIReleaseNum()>=3)
+        return FALSE;
+
     g_results->clear();
     CComVariant ret;
     CComSafeArray<VARIANT> ary;
@@ -560,6 +578,10 @@ PREFUNCDEF BOOL EFuncName_Inform_SearchBegins(const char* searchstring_raw, cons
 //
 PREFUNCDEF BOOL EFuncName_Inform_RegexSearchMatch(const char* searchstring_raw, const char *searchstring_lc_nokeywords, int regexgroups, char** regexcharps)
 {
+    // don't use this method if release is 3
+    if(GetAPIReleaseNum()>=3)
+        return FALSE;
+
     g_results->clear();
     CComVariant ret;
     CComSafeArray<VARIANT> ary;
@@ -569,10 +591,13 @@ PREFUNCDEF BOOL EFuncName_Inform_RegexSearchMatch(const char* searchstring_raw, 
     pScriptControl->Run(CComBSTR(L"onRegexSearchMatch"), ary.GetSafeArrayPtr(), &ret);
 
     return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
-}*/
+}
 
 PREFUNCDEF BOOL EFuncName_Inform_SearchBeginsV2(const char* searchstring_raw, const char *searchstring_lc_nokeywords, BOOL explicitinvocation, const char *modifierstring, int triggermethod)
 {
+    if(GetAPIReleaseNum()<3)
+        return FALSE;
+
     g_results->clear();
     CComVariant ret;
     CComSafeArray<VARIANT> ary;
@@ -600,6 +625,9 @@ PREFUNCDEF BOOL EFuncName_Inform_SearchBeginsV2(const char* searchstring_raw, co
 //
 PREFUNCDEF BOOL EFuncName_Inform_RegexSearchMatchV2(const char* searchstring_raw, const char *searchstring_lc_nokeywords, int regexgroups, char** regexcharpsconst, char *modifierstring, int triggermethod)
 {
+    if(GetAPIReleaseNum()<3)
+        return FALSE;
+
     g_results->clear();
     CComVariant ret;
     CComSafeArray<VARIANT> ary;

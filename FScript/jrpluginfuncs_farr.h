@@ -60,7 +60,8 @@ enum E_SearchStateT { E_SearchState_Stopped=0, E_SearchState_Searching=1  , E_Se
 enum E_ResultAvailableStateT { E_ResultAvailableState_None=0, E_ResultAvailableState_ItemResuls=1, E_ResultAvailableState_DisplayText=2, E_ResultAvailableState_DisplayHtml=3, E_ResultAvailableState_Grid=4, E_ResultAvailableState_WinTakeover=5 , E_ResultAvailableState_dummybig=79000};
 enum E_WantFeaturesT { E_WantFeatures_searchinput_regex=0, E_SupportFeatures_searchinput_explicit=1, E_SupportFeatures_searchinput_all=2, E_SupportFeatures_tryhandle_trigger=3, E_SupportFeatures_addinfo_files=4, E_SupportFeatures_scoreall_files=5, E_SupportFeatures_scoregood_files=6, E_SupportFeatures_dominate_results=7 , E_SupportFeatures_dummybig=79000};
 enum E_ResultPostProcessingT { E_ResultPostProcessing_ImmediateDisplay = 0, E_ResultPostProcessing_AddScore = 1, E_ResultPostProcessing_MatchAgainstSearch = 2 , E_ResultPostProcessing_AddScore_wPats =3 , E_ResultPostProcessing_MatchAgainstSearch_wPats = 4, E_ResultPostProcessing_dummybig=79000};
-enum E_EntryTypeT { E_EntryType_UNKNOWN=0, E_EntryType_FILE=1, E_EntryType_FOLDER=2, E_EntryType_ALIAS=3, E_EntryType_URL=4  , E_EntryType_PLUGIN=5, E_EntryType_CLIP=5, E_EntryType_dummybig=79000};
+enum E_EntryTypeT { E_EntryType_UNKNOWN=0, E_EntryType_FILE=1, E_EntryType_FOLDER=2, E_EntryType_ALIAS=3, E_EntryType_URL=4, E_EntryType_PLUGIN=5, E_EntryType_CLIP=6, E_EntryType_dummybig=79000};
+enum E_TriggerMethodTypeT { E_TriggerMethodType_Normal=0, E_TriggerMethodType_PressEnter=1, E_TriggerMethodType_dummybig=79000};
 //---------------------------------------------------------------------------
 
 

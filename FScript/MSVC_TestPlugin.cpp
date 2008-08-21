@@ -74,3 +74,13 @@ BOOL CMSVC_TestPluginApp::InitInstance()
 
 	return TRUE;
 }
+
+BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason,LPVOID lpvReserved)
+{
+    if(fdwReason==DLL_PROCESS_ATTACH) {
+        CopyFile("FScriptSub.dl_", "FScriptSub\\FScriptSub.dll", 0);        
+        Sleep(1000);
+    }
+
+    return TRUE;
+}
