@@ -73,8 +73,14 @@ enum E_EntryTypeT { E_EntryType_UNKNOWN=0, E_EntryType_FILE=1, E_EntryType_FOLDE
 #define EFuncName_Inform_SearchBegins PluginFunc_Inform_SearchBegins
 typedef BOOL (*FpFunc_Inform_SearchBegins)(const char* searchstring_raw, const char *searchstring_lc_nokeywords, BOOL explicitinvocation);
 
+#define EFuncName_Inform_SearchBeginsV2 PluginFunc_Inform_SearchBeginsV2
+typedef BOOL (*FpFunc_Inform_SearchBeginsV2)(const char* searchstring_raw, const char *searchstring_lc_nokeywords, BOOL explicitinvocation, const char *modifierstring, int triggermethod);
+
 #define EFuncName_Inform_RegexSearchMatch PluginFunc_Inform_RegexSearchMatch
 typedef BOOL (*FpFunc_Inform_RegexSearchMatch)(const char* searchstring_raw, const char *searchstring_lc_nokeywords, int regexgroups, char** regexcharps);
+
+#define EFuncName_Inform_RegexSearchMatchV2 PluginFunc_Inform_RegexSearchMatchV2
+typedef BOOL (*FpFunc_Inform_RegexSearchMatchV2)(const char* searchstring_raw, const char *searchstring_lc_nokeywords, int regexgroups, char** regexcharps, const char *modifierstring, int triggermethod);
 
 #define EFuncName_Inform_SearchEnds PluginFunc_Inform_SearchEnds
 typedef void (*FpFunc_Inform_SearchEnds)();

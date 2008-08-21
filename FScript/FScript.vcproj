@@ -239,6 +239,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\jrpluginfuncs_farr.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MSVC_TestPlugin.h"
 				>
 			</File>

@@ -441,7 +441,12 @@ BOOL MyPlugin_DoAdvConfig()
     //OutputDebugString("MyPlugin_DoAdvConfig\n");
     // success
     //ShellExecuteA(NULL, "edit", g_currentDirectory+"\\fscript.js", NULL,NULL, SW_SHOWNORMAL);
-    
+    CComVariant ret;
+    CComSafeArray<VARIANT> ary; ary.Create();
+    HRESULT hr = pScriptControl->Run(CComBSTR(L"onDoAdvConfig"), ary.GetSafeArrayPtr(), &ret);
+    if(ret.vt==VT_BOOL && ret.boolVal == VARIANT_TRUE)
+        return TRUE;
+
     ShowOptionDialog();
     return TRUE;
 }
@@ -527,7 +532,7 @@ PREFUNCDEF BOOL EFuncName_Ask_WantFeature(E_WantFeaturesT featureid)
 // NOTE: if asynchronous searching is to be done, make sure to only set g_current_searchstate=E_SearchState_Stopped when done!
 //
 
-
+/*
 PREFUNCDEF BOOL EFuncName_Inform_SearchBegins(const char* searchstring_raw, const char *searchstring_lc_nokeywords, BOOL explicitinvocation)
 {
     g_results->clear();
@@ -564,7 +569,50 @@ PREFUNCDEF BOOL EFuncName_Inform_RegexSearchMatch(const char* searchstring_raw, 
     pScriptControl->Run(CComBSTR(L"onRegexSearchMatch"), ary.GetSafeArrayPtr(), &ret);
 
     return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
+}*/
+
+PREFUNCDEF BOOL EFuncName_Inform_SearchBeginsV2(const char* searchstring_raw, const char *searchstring_lc_nokeywords, BOOL explicitinvocation, const char *modifierstring, int triggermethod)
+{
+    g_results->clear();
+    CComVariant ret;
+    CComSafeArray<VARIANT> ary;
+    ary.Add(CComVariant(CComVariant(g_queryKey)));
+    ary.Add(CComVariant(CComVariant(explicitinvocation)));
+    ary.Add(CComVariant(CComVariant(searchstring_raw)));
+    ary.Add(CComVariant(CComVariant(searchstring_lc_nokeywords)));
+    ary.Add(CComVariant(CComVariant(modifierstring)));
+    ary.Add(CComVariant(CComVariant(triggermethod)));
+    HRESULT hr=pScriptControl->Run(CComBSTR(L"onSearchBegin"), ary.GetSafeArrayPtr(), &ret);
+
+    return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
+} 
+
+
+// Host informs us that regular expression match **HAS** occured, and to begin doing that we need to do on such a match
+// The Plugin DLL could do all "searching" here (if there is indeed any to do)
+// And compute all results within this function, OR simply begin a threaded asynchronous search now.
+//
+// To access the group capture strings, use regexcharps[1] to match the first group, etc.
+//
+// returns TRUE only if the plugin decides now that no more searching should be done by any other plugin or builtin
+//
+// NOTE: if asynchronous searching is to be done, make sure to only set g_current_searchstate=E_SearchState_Stopped when done!
+//
+PREFUNCDEF BOOL EFuncName_Inform_RegexSearchMatchV2(const char* searchstring_raw, const char *searchstring_lc_nokeywords, int regexgroups, char** regexcharpsconst, char *modifierstring, int triggermethod)
+{
+    g_results->clear();
+    CComVariant ret;
+    CComSafeArray<VARIANT> ary;
+    ary.Add(CComVariant(CComVariant(g_queryKey)));
+    ary.Add(CComVariant(CComVariant(searchstring_raw)));
+    ary.Add(CComVariant(CComVariant(searchstring_lc_nokeywords)));
+    ary.Add(CComVariant(CComVariant(modifierstring)));
+    ary.Add(CComVariant(CComVariant(triggermethod)));
+    pScriptControl->Run(CComBSTR(L"onRegexSearchMatch"), ary.GetSafeArrayPtr(), &ret);
+
+    return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
 }
+
 
 
 // Host is requesting one of our results
