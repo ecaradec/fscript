@@ -1,0 +1,30 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+    object,
+    uuid(5FCC49E6-1F7C-448c-BA9D-0E2160819F43),
+    dual,
+    helpstring("IFARR"),
+    pointer_default(unique)
+]
+interface IFARR : IDispatch
+{
+    HRESULT emitResult([in] UINT querykey, [in] BSTR title, [in] BSTR path, [in] BSTR icon, [in,defaultvalue(1)] int entrytype, [in,defaultvalue(2)] int resultpostprocessing, [in,defaultvalue(300)] int score);
+    HRESULT setState([in] UINT querykey, [in] UINT s);
+    HRESULT notifyStateChange([in] UINT querykey);
+    HRESULT setStrValue([in] BSTR command, [in,defaultvalue("")] BSTR value);
+    HRESULT debug([in] BSTR txt);
+};
+
+[
+    uuid(CF464340-B930-4e41-A5B8-A99AE3F5AC7D),
+    version(1.0),
+    helpstring("farr Type Library")
+]
+library FARRLib
+{
+    importlib("stdole32.tlb");
+    importlib("stdole2.tlb");
+    interface IFARR;
+}

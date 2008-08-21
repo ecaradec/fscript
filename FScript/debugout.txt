@@ -1,0 +1,974 @@
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: In TMainForm::OptionsChange
+Message: In TMainForm::OptionsChange - stage 1
+Message: In TMainForm::OptionsChange - stage 2
+Message: In TMainForm::OptionsChange - stage 3
+Message: In TMainForm::OptionsChange - stage 4
+Message: In TMainForm::OptionsChange - stage 5
+Message: In TMainForm::OptionsChange - stage 6
+Message: In TMainForm::OptionsChange - stage 7
+Message: In TMainForm::OptionsChange - stage 8
+Message: In TMainForm::OptionsChange - stage 9
+Message: In TMainForm::OptionsChange - stage 10
+Message: In TMainForm::OptionsChange - stage 11
+Message: In TMainForm::OptionsChange - END STAGE
+Message: In FillResultsWithPastLaunchHistory Start.
+Message: In FillResultsWithPastLaunchHistory End.
+Message: In LoadAllPlugins - start
+Message: In FreeAllPlugins - start with1
+Message: In FreeAllPlugins - stage 1
+Message: In SaveAllIConfigFiles - stage 1
+Message: LEAVING SaveAllIConfigFiles
+Message: In FreeAllPlugins - stage 2
+Message: LEAVING FreeAllPlugins
+Message: In LoadAllPlugins - after FreeAllPlugins
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: UNLoading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FCalc\FCalc.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FCalc\FCalc.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FScriptSample\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FScriptSample\FScript.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\GoogleTranslate\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\GoogleTranslate\FScript.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Timer\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Timer\FScript.dll
+Message: LoadAllIConfigFiles
+Message: DONE LoadAllIConfigFiles, now enabling
+Message: DONE EnableAllPluginsFromIconfigs, now gathering
+Message: DONE GatherInfoFromPlugins
+Message: In PrepareFormForNewSearch Start.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: In PrepareFormForNewSearch End.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: In PrepareFormForNewSearch Start.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: In PrepareFormForNewSearch End.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: Search Loop Start.
+Message: In FillResultsWithPastLaunchHistory Start.
+Message: In FillResultsWithPastLaunchHistory End.
+Message: In ToggleDisplay with !noshow.
+Message: In TMainForm::SmartAdjustMainFormOnTop
+Message: In TMainForm::SmartAdjustMainFormOnTop - stage1
+Message: In TMainForm::SmartAdjustMainFormOnTop - stage2
+Message: In TMainForm::SmartAdjustMainFormOnTop - setting false on top
+Message: Leaving TMainForm::SmartAdjustMainFormOnTop
+Message: Calling gosearch.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: In ToggleDisplay END.
+Message: Search Loop Start.
+Message: In FillResultsWithPastLaunchHistory Start.
+Message: In FillResultsWithPastLaunchHistory End.
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: Search Loop Start.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: Inform_SearchEnd with 5plugins.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: leaving Inform_SearchEnd.
+Message: Search Loop End.
+Message: Search Loop Start.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: Inform_SearchEnd with 5plugins.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: leaving Inform_SearchEnd.
+Message: Search Loop End.
+Message: In TMainForm::ToggleOptionsFormShow
+Message: In TMainForm::ToggleOptionsFormShow - stage 1
+Message: In TMainForm::ToggleOptionsFormShow - stage 2
+Message: In TMainForm::SmartAdjustMainFormOnTop
+Message: In TMainForm::SmartAdjustMainFormOnTop - stage1
+Message: In TMainForm::SmartAdjustMainFormOnTop - stage2
+Message: In TMainForm::SmartAdjustMainFormOnTop - setting false on top
+Message: Leaving TMainForm::SmartAdjustMainFormOnTop
+Message: In TMainForm::ToggleOptionsFormShow - stage 3
+Message: In TMainForm::TimerOptionsFormKludgeFixTimer - 1
+Message: Leaving TMainForm::TimerOptionsFormKludgeFixTimer - 2
+Message: In FreeAllPlugins - start with1
+Message: In FreeAllPlugins - stage 1
+Message: In SaveAllIConfigFiles - stage 1
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\FCalc\FCalc.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\FScriptSample\FScript.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\GoogleTranslate\FScript.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\Timer\FScript.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: LEAVING SaveAllIConfigFiles
+Message: In FreeAllPlugins - stage 2
+Message: In FreeAllPlugins - stage 3a
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3b
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\FCalc\FCalc.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\FScriptSample\FScript.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\GoogleTranslate\FScript.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\Timer\FScript.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: LEAVING FreeAllPlugins
+Message: In LoadAllPlugins - start
+Message: In FreeAllPlugins - start with1
+Message: In FreeAllPlugins - stage 1
+Message: In SaveAllIConfigFiles - stage 1
+Message: LEAVING SaveAllIConfigFiles
+Message: In FreeAllPlugins - stage 2
+Message: LEAVING FreeAllPlugins
+Message: In LoadAllPlugins - after FreeAllPlugins
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\DataGenerator\DataGenerator.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\DataGenerator\DataGenerator.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\DQPlugins\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\DQPlugins\FScript.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\ExternalSearch\ExternalSearch.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\ExternalSearch\ExternalSearch.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: UNLoading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRPluginRCW.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRPluginRCW.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrLocate32\FarrLocate32.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrLocate32\FarrLocate32.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrUninstall\FarrUninstall.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrUninstall\FarrUninstall.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FCalc\FCalc.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FCalc\FCalc.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FScriptSample\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FScriptSample\FScript.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\GoogleTranslate\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\GoogleTranslate\FScript.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\KlipKeeper\KlipKeeper.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\KlipKeeper\KlipKeeper.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\NWConnect\NWConnectionPlugin.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\NWConnect\NWConnectionPlugin.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\PrinterList\PrinterListPlugin.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\PrinterList\PrinterListPlugin.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\ProcessKill\ProcessKillPlugin.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\ProcessKill\ProcessKillPlugin.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\SendMessage\SendMessage.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\SendMessage\SendMessage.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\ServiceCtrl\ServiceCtrlPlugin.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\ServiceCtrl\ServiceCtrlPlugin.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Timer\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Timer\FScript.dll
+Message: LoadAllIConfigFiles
+Message: DONE LoadAllIConfigFiles, now enabling
+Message: DONE EnableAllPluginsFromIconfigs, now gathering
+Message: DONE GatherInfoFromPlugins
+Message: In TMainForm::SmartAdjustMainFormOnTop
+Message: In TMainForm::SmartAdjustMainFormOnTop - stage1
+Message: In TMainForm::SmartAdjustMainFormOnTop - stage2
+Message: In TMainForm::SmartAdjustMainFormOnTop - setting false on top
+Message: Leaving TMainForm::SmartAdjustMainFormOnTop
+Message: In TMainForm::SmartAdjustMainFormOnTop
+Message: In TMainForm::SmartAdjustMainFormOnTop - stage1
+Message: In TMainForm::SmartAdjustMainFormOnTop - stage2
+Message: In TMainForm::SmartAdjustMainFormOnTop - setting false on top
+Message: Leaving TMainForm::SmartAdjustMainFormOnTop
+Message: In LoadAllPlugins - start
+Message: In FreeAllPlugins - start with1
+Message: In FreeAllPlugins - stage 1
+Message: In SaveAllIConfigFiles - stage 1
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\DataGenerator\DataGenerator.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\DQPlugins\FScript.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\ExternalSearch\ExternalSearch.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRPluginRCW.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\FarrLocate32\FarrLocate32.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\FarrUninstall\FarrUninstall.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\FCalc\FCalc.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\FScriptSample\FScript.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\GoogleTranslate\FScript.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\KlipKeeper\KlipKeeper.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\NWConnect\NWConnectionPlugin.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\PrinterList\PrinterListPlugin.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\ProcessKill\ProcessKillPlugin.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\SendMessage\SendMessage.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\ServiceCtrl\ServiceCtrlPlugin.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: In SaveAllIConfigFiles - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 1
+Message: In JrPlugin::SaveInternalConfig - stage 2
+Message: In JrPlugin::SaveInternalConfig - stage 3
+Message: In JrPlugin::SaveInternalConfig - stage 4: C:\Program Files\FindAndRunRobot\Plugins\Timer\FScript.cfi
+Message: In JrPlugin::SaveInternalConfig - stage 5
+Message: In SaveAllIConfigFiles - stage 3
+Message: LEAVING SaveAllIConfigFiles
+Message: In FreeAllPlugins - stage 2
+Message: In FreeAllPlugins - stage 3a
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3a1
+Message: In FreeAllPlugins - 3a2
+Message: In FreeAllPlugins - stage 3a3
+Message: In FreeAllPlugins - stage 3b
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\DataGenerator\DataGenerator.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\DQPlugins\FScript.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\ExternalSearch\ExternalSearch.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRPluginRCW.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\FarrLocate32\FarrLocate32.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\FarrUninstall\FarrUninstall.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\FCalc\FCalc.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\FScriptSample\FScript.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\GoogleTranslate\FScript.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\KlipKeeper\KlipKeeper.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\NWConnect\NWConnectionPlugin.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\PrinterList\PrinterListPlugin.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\ProcessKill\ProcessKillPlugin.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\SendMessage\SendMessage.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\ServiceCtrl\ServiceCtrlPlugin.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: In FreeAllPlugins - stage 3b1
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\Timer\FScript.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b2
+Message: InFreeDLL - stage 3
+Message: In FreeAllPlugins - stage 3b3
+Message: LEAVING FreeAllPlugins
+Message: In LoadAllPlugins - after FreeAllPlugins
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Delicious\FScript.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: UNLoading DLLC:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: InFreeDLL of C:\Program Files\FindAndRunRobot\Plugins\FarrAltTab\FARRAltTab.dll
+Message: InFreeDLL - stage 1
+Message: InFreeDLL - stage 2
+Message: InFreeDLL - stage 3
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FCalc\FCalc.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FCalc\FCalc.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FScriptSample\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\FScriptSample\FScript.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\GoogleTranslate\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\GoogleTranslate\FScript.dll
+Message: InFreeDLL - stage 3
+Message: Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Timer\FScript.dll
+Message: InFreeDLL - stage 3
+Message: DONE Loading DLLC:\Program Files\FindAndRunRobot\Plugins\Timer\FScript.dll
+Message: LoadAllIConfigFiles
+Message: DONE LoadAllIConfigFiles, now enabling
+Message: DONE EnableAllPluginsFromIconfigs, now gathering
+Message: DONE GatherInfoFromPlugins
+Message: In TOptionsForm::FormCloseQuery
+Message: In TOptionsForm::DoCloseupFunctions
+Message: In TOptionsForm::DoCloseupFunctions - stage 2
+Message: In TMainForm::OptionsChange
+Message: In TMainForm::OptionsChange - stage 1
+Message: In TMainForm::OptionsChange - stage 2
+Message: In TMainForm::OptionsChange - stage 3
+Message: In TMainForm::OptionsChange - stage 4
+Message: In TMainForm::OptionsChange - stage 5
+Message: In TMainForm::OptionsChange - stage 6
+Message: In TMainForm::OptionsChange - stage 7
+Message: In TMainForm::OptionsChange - stage 8
+Message: In TMainForm::OptionsChange - stage 9
+Message: In TMainForm::OptionsChange - stage 10
+Message: In TMainForm::OptionsChange - stage 11
+Message: In TMainForm::OptionsChange - END STAGE
+Message: In TOptionsForm::DoCloseupFunctions - stage 3
+Message: In TOptionsForm::DoCloseupFunctions - stage 4
+Message: In TMainForm::OptionsFormCloses
+Message: Leaving TMainForm::OptionsFormCloses
+Message: In TOptionsForm::DoCloseupFunctions - stage 5
+Message: In TOptionsForm::DoCloseupFunctions - stage 6
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: In TOptionsForm::DoCloseupFunctions - stage 7
+Message: In TOptionsForm::DoCloseupFunctions - stage 8
+Message: In TOptionsForm::DoCloseupFunctions - stage 9
+Message: In TOptionsForm::DoCloseupFunctions - stage 10
+Message: In TOptionsForm::DoCloseupFunctions - stage 11
+Message: In TOptionsForm::DoCloseupFunctions - stage 12
+Message: Leaving TOptionsForm::FormCloseQuery
+Message: In TOptionsForm::FormClose
+Message: In TMainForm::SmartAdjustMainFormOnTop
+Message: In TMainForm::SmartAdjustMainFormOnTop - stage1
+Message: In TMainForm::SmartAdjustMainFormOnTop - stage2
+Message: In TMainForm::SmartAdjustMainFormOnTop - setting false on top
+Message: Leaving TMainForm::SmartAdjustMainFormOnTop
+Message: Leaving TOptionsForm::FormClose
+Message: Search Loop Start.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: Inform_SearchEnd with 5plugins.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: leaving Inform_SearchEnd.
+Message: Search Loop End.
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: Search Loop Start.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: Inform_SearchEnd with 5plugins.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: leaving Inform_SearchEnd.
+Message: Search Loop End.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: Search Loop Start.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: Inform_SearchEnd with 5plugins.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: leaving Inform_SearchEnd.
+Message: Search Loop End.
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: Search Loop Start.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: Inform_SearchEnd with 5plugins.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: leaving Inform_SearchEnd.
+Message: Search Loop End.
+Message: Search Loop Start.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: Inform_SearchEnd with 5plugins.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: leaving Inform_SearchEnd.
+Message: Search Loop End.
+Message: GoSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: Search Loop Start.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: Inform_SearchEnd with 5plugins.
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message:  in JrPluginManager_FARR::ReceiveCallbackSearchStateChanged - B
+Message:  Leaving JrPluginManager_FARR::ReceiveCallbackSearchStateChanged
+Message: leaving Inform_SearchEnd.
+Message: Search Loop End.
+Message: In ToggleDisplay Start with noshow=0.
+Message: In ToggleDisplay minimizing Start.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: In PrepareFormForNewSearch Start.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: In PrepareFormForNewSearch End.
+Message: InterruptSearch activated.
+Message: Leaving InterruptSearch activated.
+Message: In ToggleDisplay minimizing End.
+Message: In ToggleDisplay End.

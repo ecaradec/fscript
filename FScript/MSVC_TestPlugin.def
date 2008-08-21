@@ -1,0 +1,6 @@
+; MSVC_TestPlugin.def : Declares the module parameters for the DLL.
+
+LIBRARY      "MSVC_TestPlugin"
+
+EXPORTS
+    ; Explicit exports can go here

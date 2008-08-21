@@ -1,0 +1,12 @@
+*.suo
+*.ncb
+debug/
+release/
+FScript/Debug/
+FScript/Release/
+*_h.h
+*_i.c
+*_p.c
+dlldata.c
+*.tlb
+*.user
