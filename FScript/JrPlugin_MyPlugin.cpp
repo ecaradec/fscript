@@ -23,6 +23,12 @@
 #import "msscript.ocx" raw_interfaces_only // msscript.ocx 
 using namespace MSScriptControl;
 
+// 4244 : disable UINT_PTR cast to LONG warning
+// 4312 : conversion from 'int' to 'HMENU' of greater size
+// 4018: '>' : signed/unsigned mismatch
+// 4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+#pragma warning(disable : 4244 4312 4018 4267)
+
 
 struct Result
 {
@@ -507,6 +513,12 @@ BOOL MyPlugin_DoShowReadMe()
 {
     //OutputDebugString("MyPlugin_DoShowReadMe\n");
     // by default show the configured readme file
+    CComVariant ret;
+    CComSafeArray<VARIANT> ary; ary.Create();
+    HRESULT hr = pScriptControl->Run(CComBSTR(L"onDoShowReadMe"), ary.GetSafeArrayPtr(), &ret);
+    if(ret.vt==VT_BOOL && ret.boolVal == VARIANT_TRUE)
+        return TRUE;
+
     char fname[MAX_PATH+1];
     strcpy(fname, dlldir);
     strcat(fname, "\\");
