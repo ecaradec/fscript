@@ -33,15 +33,17 @@ using namespace MSScriptControl;
 struct Result
 {
     Result() {}
-    Result(const CString &title_, const CString &path_, const CString &icon_, E_EntryTypeT entrytype_=E_EntryType_FILE, E_ResultPostProcessingT matching_=E_ResultPostProcessing_MatchAgainstSearch, int score_=300)
-        :score(score_), title(title_), path(path_), icon(icon_), entrytype(entrytype_), matching(matching_) {
+    Result(const CString &title_, const CString &path_, const CString &groupname_, const CString &icon_, E_EntryTypeT entrytype_, E_ResultPostProcessingT matching_, int score_, const CComVariant &args_)
+        :score(score_), title(title_), path(path_), groupname(groupname_), icon(icon_), entrytype(entrytype_), matching(matching_), args(args_) {
     }
-    int                 score;
-    CString             title;
-    CString             path;
-    CString             icon;
-    E_EntryTypeT        entrytype;
+    int                     score;
+    CString                 title;
+    CString                 path;
+    CString                 groupname;
+    CString                 icon;
+    E_EntryTypeT            entrytype;
     E_ResultPostProcessingT matching;
+    CComVariant             args;
 };
 
 
@@ -160,12 +162,12 @@ struct FarrObject : CComObjectRoot,
         COM_INTERFACE_ENTRY(IDispatch)
     END_COM_MAP()
 
-    STDMETHOD(emitResult)(UINT querykey, BSTR title, BSTR path, BSTR icon, int entrytype, int resultpostprocessing, int score)
+    STDMETHOD(emitResult)(UINT querykey, BSTR title, BSTR path, BSTR icon, int entrytype, int resultpostprocessing, int score, BSTR groupname, VARIANT args)
     {
         // ignore previous query
         if(querykey!=g_queryKey)
             return S_FALSE;
-        g_results->push_back(Result(CString(title), CString(path), CString(icon), E_EntryTypeT(entrytype), E_ResultPostProcessingT(resultpostprocessing), score));
+        g_results->push_back(Result(CString(title), CString(path), CString(groupname), CString(icon), E_EntryTypeT(entrytype), E_ResultPostProcessingT(resultpostprocessing), score, CComVariant(args)));
         return S_OK;
     }
     STDMETHOD(setState)(UINT querykey, UINT s)
@@ -365,22 +367,8 @@ void ShowOptionDialog() {
         hwnd=CreateWindowA("Edit", CString(valueText), WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP|ES_AUTOHSCROLL, 160, y, 160, 20, g_optionDlgHwnd, (HMENU)i, 0, 0);
         SendMessage(hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
         SetWindowLong(hwnd, GWL_WNDPROC, (UINT_PTR)EditProc);
-
-        /*HDC hdc=GetDC(hwnd);
-        SIZE s;
-        GetTextExtentExPoint(hdc, CString(labelText), CString(labelText).GetLength(), 8192, 0, 0, &s);
-        ReleaseDC(hwnd,hdc);
-        maxExtent=max(s.cx,maxExtent);*/
-
         y+=25;
     }
-
-    /*y=5;
-    for(int i=0;i<len;i++) {
-        SetWindowPos(GetDlgItem(g_optionDlgHwnd, 0xF000+i), 0, 5, y, maxExtent, 20, SWP_NOZORDER);
-        SetWindowPos(GetDlgItem(g_optionDlgHwnd, i), 0, maxExtent+5, y, 315-maxExtent, 20, SWP_NOZORDER);
-        y+=25;
-    }*/
 
     hwnd=CreateWindowA("Button", "OK", WS_CHILD|WS_VISIBLE|BS_DEFPUSHBUTTON|WS_TABSTOP, 160, y, 160, 30, g_optionDlgHwnd, (HMENU)0xFFFF, 0, 0);
     SendMessage(hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
@@ -523,7 +511,7 @@ BOOL MyPlugin_DoShowReadMe()
     strcpy(fname, dlldir);
     strcat(fname, "\\");
     strcat(fname, ThisPlugin_ReadMeFile);
-    ShellExecuteA(NULL, "open", fname, NULL,NULL, SW_SHOWNORMAL);
+    ShellExecuteA(NULL, "open", fname, NULL,NULL, SW_SHOWNORMAL); 
 
     // success
     return TRUE;
@@ -720,11 +708,12 @@ PREFUNCDEF BOOL EFuncName_Request_ItemResultByIndex(int resultindex, char *destb
     Result &r((*g_results)[resultindex]);
     strncpy(destbuf_caption, r.title.GetBuffer(), maxlen);
     strncpy(destbuf_path, r.path.GetBuffer(), maxlen);
+    strncpy(destbuf_groupname, r.groupname.GetBuffer(), maxlen);
     if(r.icon!="")
         strncpy(destbuf_iconfilename, (g_currentDirectory+"\\"+r.icon).GetBuffer(), maxlen);
     else
         strncpy(destbuf_iconfilename, "", maxlen);
-
+    *tagvoidpp=&r.args;
     *entrytypep=r.entrytype;
     *resultpostprocmodep=r.matching;
     *scorep=r.score;
@@ -858,34 +847,31 @@ PREFUNCDEF BOOL EFuncName_Request_TextResultCharp(char **charp)
 // Return TRUE to takeover launching and prevent all other further launching
 // or FALSE to continue launching after we return
 //
-PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const char* destbuf_caption, const char* destbuf_groupname, int pluginid,int thispluginid, int score, E_EntryTypeT entrytype, void* tagvoidp, BOOL *closeafterp)
+PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const char* destbuf_caption, const char* destbuf_groupname, int pluginid, int thispluginid, int score, E_EntryTypeT entrytype, void* tagvoidp, BOOL *closeafterp)
 {
-    //OutputDebugString("EFuncName_Allow_ProcessTrigger\n");
-    // does this plugin want to take over launching of this result?
-    if (thispluginid!=pluginid)
-    {
-        // if we didnt create it, let default handler do it
-        return FALSE;
-    }
+    CComVariant ret;
+    CComSafeArray<VARIANT> ary;
+    ary.Add(CComVariant(CComVariant(destbuf_path)));
+    ary.Add(CComVariant(CComVariant(destbuf_caption)));
+    ary.Add(CComVariant(CComVariant(destbuf_groupname)));
+    ary.Add(CComVariant(CComVariant(pluginid)));
+    ary.Add(CComVariant(CComVariant(thispluginid)));
+    ary.Add(CComVariant(CComVariant(score)));
+    ary.Add(CComVariant(CComVariant(entrytype)));
+    if(tagvoidp)
+        ary.Add(CComVariant(CComVariant(*(CComVariant*)tagvoidp)));
     else
-    {
-        CComVariant ret;
-        CComSafeArray<VARIANT> ary;
-        ary.Add(CComVariant(CComVariant(destbuf_path)));
-        ary.Add(CComVariant(CComVariant(destbuf_caption)));
-        pScriptControl->Run(CComBSTR(L"onProcessTrigger"), ary.GetSafeArrayPtr(), &ret);
+        ary.Add(CComVariant(CComVariant()));
+    pScriptControl->Run(CComBSTR(L"onProcessTrigger"), ary.GetSafeArrayPtr(), &ret);
 
-        static const int TRIGGER_HANDLED=1;
-        static const int TRIGGER_CLOSE=2;
-        if(ret.vt==VT_I4) {
-            *closeafterp=((ret.intVal&TRIGGER_CLOSE)!=0);
-            return ((ret.intVal&TRIGGER_HANDLED)!=0);
-        }
-
-        return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
+    static const int TRIGGER_HANDLED=1;
+    static const int TRIGGER_CLOSE=2;
+    if(ret.vt==VT_I4) {
+        *closeafterp=((ret.intVal&TRIGGER_CLOSE)!=0);
+        return ((ret.intVal&TRIGGER_HANDLED)!=0);
     }
 
-    return FALSE;
+    return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
 }
 
 // Host is asking us if we want to modify the score of an item
