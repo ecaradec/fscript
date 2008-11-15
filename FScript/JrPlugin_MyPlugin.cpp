@@ -280,6 +280,13 @@ LRESULT __stdcall ComWndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
         CComSafeArray<VARIANT> ary(ULONG(0));
         HRESULT hr=pScriptControl->Run(CComBSTR(L"onOptionsChanged"), ary.GetSafeArrayPtr(), &ret);
         return S_OK;
+    } else if(msg==WM_USER+1) {
+        CComVariant ret;
+        CComSafeArray<VARIANT> ary(ULONG(0));
+        ary.Add(CComVariant(wparam));
+        ary.Add(CComVariant(lparam));
+        HRESULT hr=pScriptControl->Run(CComBSTR(L"onWin32Message"), ary.GetSafeArrayPtr(), &ret);
+        return S_OK;
     }
     return DefWindowProc(hwnd, msg, wparam, lparam);
 }

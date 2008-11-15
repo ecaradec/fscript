@@ -98,7 +98,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\FindAndRunRobot\Plugins\Scripter\FScript.dll&quot;"
+				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\FindAndRunRobot\Plugins\FSubScript\FScript.dll&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -184,7 +184,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\FindAndRunRobot\Plugins\Scripter\FScript.dll&quot;"
+				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\FindAndRunRobot\Plugins\FSubScript\FScript.dll&quot;"
 			/>
 		</Configuration>
 	</Configurations>
