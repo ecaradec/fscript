@@ -546,8 +546,7 @@ onIdleTime is called when more than 500ms idle elapsed in memo mode
 {{{onSetStrValue}}}
 called when FARR set a value
 {{{onGetStrValue}}}
-called when FARR want a value from the plugin
-</pre>
+called when FARR want a value from the plugin</pre>
 </div>
 <div title="Basic installation" modifier="Ecaradec" created="200811111347" modified="200811111354" changecount="51">
 <pre>Copy the FScript.dll to a folder in Farr/plugins, create a fscript.js file and copy the basic sample into it.  Change the globals variables displayname, version, author, ... At this point your plugin should be listed in the FARR plugin list. 
@@ -571,14 +570,25 @@ reporterror, ERRORTEXTTOREPORTINPLUGINLOG
 clipboard
 DisplayAlertMessage, TITLEnTEXT FOR ALERT BOX
 DisplayAlertMessageNoTimeout, TITLEnTEXT FOR ALERT BOX
-DisplayBalloonMessage,TITLEnTEXT FOR BALLOON TEXT
-</pre>
+DisplayBalloonMessage,TITLEnTEXT FOR BALLOON TEXT</pre>
 </div>
 <div title="Debugging" modifier="Ecaradec" created="200811111351" modified="200811111405" changecount="51">
 <pre>Debugging can be improved by installing the microsoft javascript debugger and setting the DWORDs :
 {{{HKEY_CURRENT_USER\Software\Microsoft\Windows Script\Settings\JITDebug=1}}}
 {{{HKEY_CURRENT_USER\Software\Microsoft\Windows Script Host\Settings\JITDebug=1}}}
 in the registry base.</pre>
+</div>
+<div title="DefaultTiddlers" modifier="YourName" created="200811111603" modified="200811111604" changecount="2">
+<pre>[[The fingers in the nose guide to build javascript plugins for FARR. Does that mean its easy ?]]
+[[Basic installation]]
+[[Javascript plugin sample]]
+[[FARR global object]]
+[[Available callbacks]]
+[[Commands callables by plugin]]
+[[XML options (deprecated )]]
+[[Useful objects]]
+[[Debugging]]
+[[querykey]]</pre>
 </div>
 <div title="FARR global object" modifier="Ecaradec" created="200811111350" modified="200811111406" changecount="51">
 <pre>{{{FARR.emitResult(querykey, title, path, icon, entrytype=FILE, resultpostprocessing=2, score=300);}}}

@@ -21,6 +21,8 @@ interface IFARR : IDispatch
     HRESULT showOptions();
     HRESULT exec([in] BSTR file, [in] BSTR params, [in] BSTR directory, [out,retval] VARIANT_BOOL *b);
     HRESULT getIniValue([in] BSTR file, [in] BSTR section, [in] BSTR value, [in,defaultvalue("")] BSTR def, [out,retval] BSTR *o);
+    HRESULT getKeyState([in] UINT vk, [out,retval] SHORT *state);
+    HRESULT getQueryString([out,retval] BSTR *query);
 };
 
 [

@@ -241,6 +241,35 @@ struct FarrObject : CComObjectRoot,
         *out=o.AllocSysString();
         return S_OK;
     }
+    STDMETHOD(getKeyState)(UINT vk, SHORT *state)
+    {
+        *state=GetKeyState(vk);
+        return S_OK;
+    }
+    static BOOL CALLBACK FindTEdit(HWND hwnd, LPARAM lParam)
+    {
+        CString clss;
+        GetClassName(hwnd, clss.GetBufferSetLength(128), 128);
+        if(clss=="TEdit")
+        {
+            *(HWND*)lParam=hwnd;
+            return FALSE;
+        }
+        return TRUE;
+    }
+    STDMETHOD(getQueryString)(BSTR *query)
+    {
+        HWND mainForm;
+        BOOL b=callbackfp_get_strval(hostptr, "Handle.MainForm", (char*)(void*)&mainForm, sizeof(mainForm));
+
+        HWND tedit=0;
+        EnumChildWindows(mainForm, FindTEdit, (LPARAM)&tedit);
+
+        CString txt;
+        GetWindowText(tedit, txt.GetBufferSetLength(GetWindowTextLength(tedit)+1),GetWindowTextLength(tedit)+1); txt.ReleaseBuffer();
+        *query=txt.AllocSysString();
+        return S_OK;
+    }
 };
 
 LRESULT __stdcall ComWndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -709,7 +738,10 @@ PREFUNCDEF BOOL EFuncName_Request_ItemResultByIndex(int resultindex, char *destb
     strncpy(destbuf_caption, r.title.GetBuffer(), maxlen);
     strncpy(destbuf_path, r.path.GetBuffer(), maxlen);
     strncpy(destbuf_groupname, r.groupname.GetBuffer(), maxlen);
-    if(r.icon!="")
+
+    if(PathFileExists(r.icon))
+        strncpy(destbuf_iconfilename, r.icon.GetBuffer(), maxlen);
+    else if(PathFileExists(g_currentDirectory+"\\"+r.icon))
         strncpy(destbuf_iconfilename, (g_currentDirectory+"\\"+r.icon).GetBuffer(), maxlen);
     else
         strncpy(destbuf_iconfilename, "", maxlen);
@@ -729,7 +761,7 @@ PREFUNCDEF BOOL EFuncName_Request_ItemResultByIndex(int resultindex, char *destb
 //
 // NOTE: make sure to set g_current_searchstate=E_SearchState_Stopped;
 //
-PREFUNCDEF void EFuncName_Inform_SearchEnds()
+PREFUNCDEF void EFuncName_Inform_SearchEnds()   
 {
     //OutputDebugString("EFuncName_Inform_SearchEnds\n");
     g_queryKey++;
