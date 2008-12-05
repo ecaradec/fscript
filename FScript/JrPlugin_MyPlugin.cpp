@@ -234,11 +234,17 @@ struct FarrObject : CComObjectRoot,
         *bSuccess = ShellExecute(0, "open", CString(file), CString(parameters), CString(curDir), SW_NORMAL)!=0?VARIANT_TRUE:VARIANT_FALSE;
         return S_OK;
     }
-    STDMETHOD(getIniValue)(BSTR file, BSTR section, BSTR value, BSTR def, BSTR *out)
+    STDMETHOD(getIniValue)(BSTR file, BSTR section, BSTR key, BSTR def, BSTR *out)
     {
         CString o;
-        GetPrivateProfileString(CString(section), CString(value), CString(def), o.GetBufferSetLength(4096), 4096, CString(file)); o.ReleaseBuffer();
+        GetPrivateProfileString(CString(section), CString(key), CString(def), o.GetBufferSetLength(4096), 4096, CString(file)); o.ReleaseBuffer();
         *out=o.AllocSysString();
+        return S_OK;
+    }
+    STDMETHOD(setIniValue)(BSTR file, BSTR section, BSTR key, BSTR value)
+    {
+        CString o;
+        BOOL b=WritePrivateProfileString(CString(section), CString(key), CString(value), CString(file));
         return S_OK;
     }
     STDMETHOD(getKeyState)(UINT vk, SHORT *state)
@@ -268,6 +274,11 @@ struct FarrObject : CComObjectRoot,
         CString txt;
         GetWindowText(tedit, txt.GetBufferSetLength(GetWindowTextLength(tedit)+1),GetWindowTextLength(tedit)+1); txt.ReleaseBuffer();
         *query=txt.AllocSysString();
+        return S_OK;
+    }
+    STDMETHOD(getObject)(BSTR q, IDispatch **p)
+    {
+        ::CoGetObject(q, NULL, IID_IDispatch, (void**)p);
         return S_OK;
     }
 };

@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FScript", "FScript\FScript.vcproj", "{21651447-C809-4A19-BFB6-7FF924E19569}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{04CA0584-0FA8-4534-AB27-72CB4753D2CA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FScript", "FScript\fScript.vcproj", "{21651447-C809-4A19-BFB6-7FF924E19569}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
