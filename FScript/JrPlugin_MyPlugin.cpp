@@ -924,6 +924,35 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const c
     return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
 }
 
+PREFUNCDEF BOOL EFuncName_Allow_ProcessTriggerV2(const char* destbuf_path, const char* destbuf_caption, const char* destbuf_groupname, int pluginid, int thispluginid, int score, E_EntryTypeT entrytype, void* tagvoidp, BOOL *closeafterp, int triggermode)
+{
+    CComVariant ret;
+    CComSafeArray<VARIANT> ary;
+    ary.Add(CComVariant(CComVariant(destbuf_path)));
+    ary.Add(CComVariant(CComVariant(destbuf_caption)));
+    ary.Add(CComVariant(CComVariant(destbuf_groupname)));
+    ary.Add(CComVariant(CComVariant(pluginid)));
+    ary.Add(CComVariant(CComVariant(thispluginid)));
+    ary.Add(CComVariant(CComVariant(score)));
+    ary.Add(CComVariant(CComVariant(entrytype)));
+    if(tagvoidp)
+        ary.Add(CComVariant(CComVariant(*(CComVariant*)tagvoidp)));
+    else
+        ary.Add(CComVariant(CComVariant()));
+    ary.Add(CComVariant(CComVariant(triggermode)));
+    pScriptControl->Run(CComBSTR(L"onProcessTriggerV2"), ary.GetSafeArrayPtr(), &ret);
+
+    static const int TRIGGER_HANDLED=1;
+    static const int TRIGGER_CLOSE=2;
+    if(ret.vt==VT_I4) {
+        *closeafterp=((ret.intVal&TRIGGER_CLOSE)!=0);
+        return ((ret.intVal&TRIGGER_HANDLED)!=0);
+    }
+
+    return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
+}
+//typedef BOOL (*FpFunc_Allow_ProcessTriggerV2)(const char* destbuf_path, const char* destbuf_caption, const char* destbuf_groupname, int pluginid,int thispluginid, int score, E_EntryTypeT entrytype, void* tagvoidp, BOOL *closeafterp, int triggermode);
+
 // Host is asking us if we want to modify the score of an item
 // Original score in in *score, we can now modify it if we want
 //

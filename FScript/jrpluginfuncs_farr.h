@@ -116,6 +116,9 @@ typedef BOOL (*FpFunc_Request_TextResultCharp)(char **charp);
 #define EFuncName_Allow_ProcessTrigger PluginFunc_Allow_ProcessTrigger
 typedef BOOL (*FpFunc_Allow_ProcessTrigger)(const char* destbuf_path, const char* destbuf_caption, const char* destbuf_groupname, int pluginid,int thispluginid, int score, E_EntryTypeT entrytype, void* tagvoidp, BOOL *closeafterp);
 
+#define EFuncName_Allow_ProcessTriggerV2 PluginFunc_Allow_ProcessTriggerV2
+typedef BOOL (*FpFunc_Allow_ProcessTriggerV2)(const char* destbuf_path, const char* destbuf_caption, const char* destbuf_groupname, int pluginid,int thispluginid, int score, E_EntryTypeT entrytype, void* tagvoidp, BOOL *closeafterp, int triggermode);
+
 #define EFuncName_Do_AdjustResultScore PluginFunc_Do_AdjustResultScore
 typedef BOOL (*FpFunc_Do_AdjustResultScore)(const char* itempath, int *scorep);
 
