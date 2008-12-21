@@ -197,7 +197,7 @@ struct FarrObject : CComObjectRoot,
     STDMETHOD(getStrValue)(BSTR command, BSTR *output)
     {        
         CString tmp;
-        callbackfp_get_strval(hostptr, CString(command), tmp.GetBufferSetLength(256), 256); tmp.ReleaseBuffer();
+        callbackfp_get_strval(hostptr, CString(command), tmp.GetBufferSetLength(4096), 4096); tmp.ReleaseBuffer();
         *output = tmp.AllocSysString();
         return S_OK;
     }
