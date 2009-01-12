@@ -15,6 +15,9 @@
 #include "fscript_h.h"
 #include "fscript_i.c"
 
+#include "libffi/ffi.h"
+
+
 #import "msxml4.dll"
 
 // our partner header which includes the funcs we need in the right way
@@ -281,6 +284,18 @@ struct FarrObject : CComObjectRoot,
         ::CoGetObject(q, NULL, IID_IDispatch, (void**)p);
         return S_OK;
     }
+    /*STDMETHOD(newCIF)()
+    {
+        // ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ffi_type_uint, args);
+        // must return a CIF object
+        // the cif object must have a call method
+
+        // a newStruct would be nice too
+        // sockaddr=newStruct([[uint8,"name"], [uint16,"name"])...
+        // sockaddr.newStruct(v1,v2,v3);
+        // or sockaddr.name1=x;
+        // or sockaddr.name2=y;
+    }*/
 };
 
 LRESULT __stdcall ComWndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)

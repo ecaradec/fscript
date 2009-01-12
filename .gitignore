@@ -10,3 +10,4 @@ FScript/Release/
 dlldata.c
 *.tlb
 *.user
+libffi/Debug/
