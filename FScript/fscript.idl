@@ -25,9 +25,11 @@ interface IFARR : IDispatch
     HRESULT getKeyState([in] UINT vk, [out,retval] SHORT *state);
     HRESULT getQueryString([out,retval] BSTR *query);
     HRESULT getObject([in] BSTR query, [out,retval] IDispatch **p);
+    [vararg] HRESULT newCFunction([in] BSTR fnName, [in] int rValType, [in] SAFEARRAY(VARIANT) *pArgsTypes, [out,retval] VARIANT *retVal);
 };
 
 [
+
     uuid(CF464340-B930-4e41-A5B8-A99AE3F5AC7D),
     version(1.0),
     helpstring("farr Type Library")

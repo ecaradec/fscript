@@ -21,6 +21,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			UseOfMFC="1"
+			UseOfATL="0"
 			CharacterSet="0"
 			>
 			<Tool
@@ -49,6 +50,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -70,6 +72,7 @@
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
+				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile=".\MSVC_TestPlugin.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"

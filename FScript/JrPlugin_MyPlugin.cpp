@@ -284,6 +284,61 @@ struct FarrObject : CComObjectRoot,
         ::CoGetObject(q, NULL, IID_IDispatch, (void**)p);
         return S_OK;
     }
+
+    ffi_type *getFFITypeOfId(int i)
+    {
+        switch(i) {
+            case 0: return &ffi_type_void; break;
+            case 1: return &ffi_type_sint32; break;
+            case 2: return &ffi_type_float; break;
+            case 3: return &ffi_type_double; break;
+            case 4: return &ffi_type_longdouble; break;
+            case 5: return &ffi_type_uint8; break;
+            case 6: return &ffi_type_sint8; break;
+            case 7: return &ffi_type_uint32; break;
+            case 8: return &ffi_type_sint16; break;
+            case 9: return &ffi_type_uint32; break;
+            case 10: return &ffi_type_sint32; break;
+            case 11: return &ffi_type_uint64; break;
+            case 12: return &ffi_type_sint64; break;
+            case 13: break;                                 // each structure type should have its own id and return a structure type of correct length
+            case 14: return &ffi_type_pointer; break;
+            //case 15: return &ffi_type_pointer; break;   // char*
+            //case 16: return &ffi_type_pointer; break;   // wchar*
+        }
+        return 0;
+    }
+
+    STDMETHOD(newCFunction)(BSTR absFnName_, int retValType_, SAFEARRAY **argsTypes_, VARIANT *pCFunc_)
+    {
+        CComSafeArray<VARIANT> argsTypes__(*argsTypes_);
+        ffi_cif   cif;        
+        ffi_type *retValType = getFFITypeOfId(retValType_);
+        ffi_type **argsTypes = (ffi_type**)malloc(sizeof(ffi_type*)*(*argsTypes_)->cbElements);
+        for(int i=0; i<argsTypes__.GetCount(); i++) {
+            
+            if(argsTypes__.GetAt(i).vt!=VT_I4)
+                return S_FALSE;
+            argsTypes[i]=getFFITypeOfId(argsTypes__.GetAt(i).intVal);
+        }
+        ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, retValType, argsTypes);
+
+        CString absFnName(absFnName_);
+        int separatorPos=absFnName.Find("!");
+        if(separatorPos==-1)
+            return S_FALSE;
+        
+        CString libName(absFnName.Left(separatorPos));
+        CString fnName(absFnName.Mid(separatorPos+1));
+        HMODULE hmod=LoadLibrary(libName);
+        if(!hmod)
+            return S_FALSE;
+
+        FARPROC farproc;        
+        farproc=GetProcAddress(hmod, fnName);     
+        
+        return S_OK;
+    }
     /*STDMETHOD(newCIF)()
     {
         // ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ffi_type_uint, args);

@@ -8,6 +8,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FScript", "FScript\FScript.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libffi", "libffi\libffi_msvc.vcproj", "{75E54A82-B01B-4D12-8154-303D8AC95183}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libffitest", "libffitest\libffitest.vcproj", "{022AE048-383B-403F-A639-4604F24299C7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75E54A82-B01B-4D12-8154-303D8AC95183} = {75E54A82-B01B-4D12-8154-303D8AC95183}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,6 +27,10 @@ Global
 		{75E54A82-B01B-4D12-8154-303D8AC95183}.Debug|Win32.Build.0 = Debug|Win32
 		{75E54A82-B01B-4D12-8154-303D8AC95183}.Release|Win32.ActiveCfg = Release|Win32
 		{75E54A82-B01B-4D12-8154-303D8AC95183}.Release|Win32.Build.0 = Release|Win32
+		{022AE048-383B-403F-A639-4604F24299C7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{022AE048-383B-403F-A639-4604F24299C7}.Debug|Win32.Build.0 = Debug|Win32
+		{022AE048-383B-403F-A639-4604F24299C7}.Release|Win32.ActiveCfg = Release|Win32
+		{022AE048-383B-403F-A639-4604F24299C7}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
