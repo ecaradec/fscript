@@ -1022,7 +1022,7 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTriggerV2(const char* destbuf_path, const
     ary.Add(CComVariant(CComVariant(thispluginid)));
     ary.Add(CComVariant(CComVariant(score)));
     ary.Add(CComVariant(CComVariant(entrytype)));
-    if(tagvoidp)
+    if(tagvoidp && thispluginid==pluginid)
         ary.Add(CComVariant(CComVariant(*(CComVariant*)tagvoidp)));
     else
         ary.Add(CComVariant(CComVariant()));
