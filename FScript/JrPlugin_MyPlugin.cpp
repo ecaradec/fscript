@@ -383,7 +383,8 @@ LRESULT __stdcall ComWndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 void InitializeScriptControl()
 {
-    pScriptControl.CreateInstance(__uuidof(ScriptControl));    
+    pScriptControl.CreateInstance(__uuidof(ScriptControl));
+
 	pScriptControl->put_AllowUI(VARIANT_TRUE);
     pScriptControl->put_Timeout(-1);
     VARIANT_BOOL noSafeSubset(VARIANT_FALSE);
@@ -995,7 +996,7 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const c
     ary.Add(CComVariant(CComVariant(thispluginid)));
     ary.Add(CComVariant(CComVariant(score)));
     ary.Add(CComVariant(CComVariant(entrytype)));
-    if(tagvoidp)
+    if(tagvoidp && thispluginid==pluginid)
         ary.Add(CComVariant(CComVariant(*(CComVariant*)tagvoidp)));
     else
         ary.Add(CComVariant(CComVariant()));
