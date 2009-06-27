@@ -1028,7 +1028,7 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTriggerV2(const char* destbuf_path, const
     else
         ary.Add(CComVariant(CComVariant()));
     ary.Add(CComVariant(CComVariant(triggermode)));
-    pScriptControl->Run(CComBSTR(L"onProcessTriggerV2"), ary.GetSafeArrayPtr(), &ret);
+    pScriptControl->Run(CComBSTR(L"onProcessTrigger"), ary.GetSafeArrayPtr(), &ret);
 
     static const int TRIGGER_HANDLED=1;
     static const int TRIGGER_CLOSE=2;
