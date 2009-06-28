@@ -1,0 +1,27 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+    object,
+    uuid(F72F278C-B8A2-44b4-B16C-F2F1DA5C67F1),
+    dual,
+    helpstring("ILibFFITest"),
+    pointer_default(unique)
+]
+interface ILibFFITest : IDispatch
+{
+    [vararg] HRESULT newCFunction([in] BSTR fnName, [in] INT rValType, [in] SAFEARRAY(VARIANT) *pArgsTypes, [out,retval] VARIANT *retVal);
+};
+
+[
+
+    uuid(E0A34E3E-2FAA-44de-9855-1A22A9BD8EF5),
+    version(1.0),
+    helpstring("FFILib Type Library")
+]
+library FFILib
+{
+    importlib("stdole32.tlb");
+    importlib("stdole2.tlb");
+    interface ILibFFITest;
+}
