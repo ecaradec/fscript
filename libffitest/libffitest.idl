@@ -11,6 +11,8 @@ import "ocidl.idl";
 interface ILibFFITest : IDispatch
 {
     [vararg] HRESULT newCFunction([in] BSTR fnName, [in] INT rValType, [in] SAFEARRAY(VARIANT) *pArgsTypes, [out,retval] VARIANT *retVal);
+             HRESULT malloc([in] INT s, [out,retval] INT *ptr);
+             HRESULT free([in] INT s);
 };
 
 [

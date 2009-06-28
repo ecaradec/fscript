@@ -52,13 +52,11 @@ struct FFIFunction : CComObjectRoot, IDispatch
             switch(v.vt)
             {
             case VT_I4:
-                *((long*)(params+index))=v.intVal;
+                *((int**)(params+index))=&v.intVal;
                 index+=4;
                 break;
             case VT_BSTR:
-                CStringW tmp(v.bstrVal);
-                *((wchar_t**)(params+index))=new wchar_t[tmp.GetLength()];
-                wcscpy(*(wchar_t**)(params+index), tmp);
+                *((wchar_t***)(params+index))=&v.bstrVal;
                 index+=4;
                 break;
             }
@@ -118,7 +116,7 @@ struct FFIObject : CComObjectRoot,
         CComSafeArray<VARIANT> argsTypes__(*argsTypes_);
         ffi_cif  *cif=new ffi_cif;
         ffi_type *retValType = getFFITypeOfId(retValType_);
-        ffi_type **argsTypes = (ffi_type**)malloc(sizeof(ffi_type*)*(*argsTypes_)->cbElements);
+        ffi_type **argsTypes = (ffi_type**)::malloc(sizeof(ffi_type*)*(*argsTypes_)->cbElements);
         for(int i=0; i<argsTypes__.GetCount(); i++) {
             UINT vt=argsTypes__.GetAt(i).vt;
             if(vt!=VT_I4)
@@ -147,7 +145,18 @@ struct FFIObject : CComObjectRoot,
         
         return S_OK;
     }
+    STDMETHOD(malloc)(INT s, INT *ptr)
+    {
+        *ptr=(INT)::malloc(s);
+        return S_OK;
+    }
+    STDMETHOD(free)(INT ptr)
+    {
+        ::free((void*)ptr);
+        return S_OK;
+    }
 };
+
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -183,12 +192,92 @@ int _tmain(int argc, _TCHAR* argv[])
                                        L"INT64=12;\n"
                                        L"STRUCT=13;\n"
                                        L"LPCHAR=LPWCHAR=POINTER=14;\n"));
-    //hr=pScriptControl->Eval(_bstr_t(L"messagebox=newCFunction('User32.dll!MessageBoxW', HWND, BOOL, LPWCHAR, LPWCHAR, UINT32);"), &v);    
+    
     hr=pScriptControl->Eval(_bstr_t("messagebox=newCFunction('User32.dll!MessageBoxW', HWND, BOOL, LPWCHAR, LPWCHAR, UINT32);\n"
-                                    "messagebox(0,'hello','hello',0);"), &v);    
+                                    "messagebox(0,'hello','hello',0);"), &v);
+
+    hr=pScriptControl->Eval(_bstr_t("memptr=malloc(30);\n"
+                                    "free(memptr)"), &v);
     
     pScriptControl=0;
     CoUninitialize();
+
 	return 0;
 }
 
+/*
+struct Test {
+    int i;
+    int ii;
+    int iii;
+};
+
+unsigned char
+foo(unsigned int x, float y, char *str, Test t)
+{
+    unsigned char result = x - y;
+    return result;
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+    ffi_cif cif;
+    ffi_type *arg_types[4];
+    void *arg_values[4];
+    ffi_status status;
+
+    // Because the return value from foo() is smaller than sizeof(long), it
+    // must be passed as ffi_arg or ffi_sarg.
+    ffi_arg result;
+
+    // Specify the data type of each argument. Available types are defined
+    // in <ffi/ffi.h>.
+    arg_types[0] = &ffi_type_uint;
+    arg_types[1] = &ffi_type_float;
+    arg_types[2] = &ffi_type_pointer;
+
+    ffi_type ffi_type_test;
+    ffi_type_test.size = sizeof(Test);
+    ffi_type_test.alignment = sizeof(Test);
+    ffi_type_test.type = FFI_TYPE_STRUCT;
+    ffi_type *ffi_type_test_elements[3];
+    ffi_type_test_elements[0]=&ffi_type_uint;
+    ffi_type_test_elements[1]=&ffi_type_uint;
+    ffi_type_test_elements[2]=&ffi_type_uint;
+
+    ffi_type_test.elements = ffi_type_test_elements;
+
+    arg_types[3] = &ffi_type_test;
+
+
+    //arg_types[3].
+
+    //FFI_TYPE_STRUCT
+
+    // Prepare the ffi_cif structure.
+    if ((status = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 4, &ffi_type_uint8, arg_types)) != FFI_OK)
+    {
+    // Handle the ffi_status error.
+    }
+
+    // Specify the values of each argument.
+    unsigned int arg1 = 42;
+    float arg2 = 5.1;
+    char *ptr=0;
+    Test t;
+    t.i=0;
+    t.ii=1;
+    t.iii=2;
+
+    arg_values[0] = &arg1;
+    arg_values[1] = &arg2;
+    arg_values[2] = &ptr;
+    arg_values[3] = &t;
+
+    // Invoke the function.
+    ffi_call(&cif, FFI_FN(foo), &result, arg_values);
+
+    // The ffi_arg 'result' now contains the unsigned char returned from foo(),
+    // which can be accessed by a typecast.
+    printf("result is %hhu", (unsigned char)result);
+}*/
