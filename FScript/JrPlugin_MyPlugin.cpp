@@ -11,6 +11,9 @@
 #include "atlsafe.h"
 #include <vector>
 #include <map>
+#include <winsock2.h>
+#include <Ws2tcpip.h>
+#include <Wspiapi.h>
 
 #include "fscript_h.h"
 #include "fscript_i.c"
@@ -158,6 +161,46 @@ LRESULT __stdcall ButtonProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
     return CallWindowProc(g_btnClass.lpfnWndProc, hwnd, msg, wparam, lparam);
 }
 
+struct TCPSocketObject : CComObjectRoot,  
+                         IDispatchImpl<ITCPSocket, &__uuidof(ITCPSocket), &LIBID_FARRLib, 0xFFFF, 0xFFFF>
+{    
+    BEGIN_COM_MAP(TCPSocketObject)
+        COM_INTERFACE_ENTRY(IDispatch)
+    END_COM_MAP()
+
+    STDMETHOD(read)(BSTR *data)
+    {
+        CString output;
+
+        int iResult;
+        char buff[256];
+        do {
+            iResult = recv(m_sock, buff, sizeof(buff), 0);
+            if(iResult==SOCKET_ERROR) {
+                return E_FAIL;
+            }
+
+            output.Append(buff,iResult);            
+        } while(iResult==sizeof(buff));
+
+        *data=output.AllocSysString();        
+        return S_OK;
+    }
+    STDMETHOD(write)(BSTR value)
+    {
+        CString v(value);
+        send(m_sock, v.GetBuffer(), v.GetLength(), 0 );
+        return S_OK;
+    }
+    STDMETHOD(close)()
+    {
+        closesocket(m_sock);
+        return S_OK;
+    }
+
+    SOCKET m_sock;
+};
+
 struct FarrObject : CComObjectRoot,  
                     IDispatchImpl<IFARR, &__uuidof(IFARR), &LIBID_FARRLib, 0xFFFF, 0xFFFF>
 {    
@@ -284,7 +327,6 @@ struct FarrObject : CComObjectRoot,
         ::CoGetObject(q, NULL, IID_IDispatch, (void**)p);
         return S_OK;
     }
-
     ffi_type *getFFITypeOfId(int i)
     {
         switch(i) {
@@ -351,6 +393,42 @@ struct FarrObject : CComObjectRoot,
         // or sockaddr.name1=x;
         // or sockaddr.name2=y;
     }*/
+    STDMETHOD(newTCPSocket)(BSTR host, int port, IDispatch **ppSock)
+    {
+        int iResult;
+        addrinfo *result = NULL, *ptr = NULL, hints;
+        SOCKET sock = INVALID_SOCKET;
+
+        ZeroMemory( &hints, sizeof(hints) );
+        hints.ai_family = AF_UNSPEC;
+        hints.ai_socktype = SOCK_STREAM;
+        hints.ai_protocol = IPPROTO_TCP;
+
+        CString portStr; portStr.Format("%d",port);
+        iResult=getaddrinfo(CString(host), portStr, &hints, &result);
+        if(iResult!=0)
+            goto fail;
+        
+        sock=socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+
+        iResult=connect( sock, result->ai_addr, (int)result->ai_addrlen);
+        if(iResult!=0)
+            goto fail;
+
+        freeaddrinfo(result);        
+
+        CComObject<TCPSocketObject> *pTCPSocket=0;
+        CComObject<TCPSocketObject>::CreateInstance(&pTCPSocket);
+        pTCPSocket->m_sock=sock;
+
+        *ppSock=pTCPSocket;
+        (*ppSock)->AddRef();
+        return S_OK;
+fail:
+        *ppSock=0;
+        closesocket(sock);
+        return S_OK;
+    }
 };
 
 LRESULT __stdcall ComWndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -374,7 +452,8 @@ LRESULT __stdcall ComWndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 void InitializeScriptControl()
 {
-    pScriptControl.CreateInstance(__uuidof(ScriptControl));    
+    pScriptControl.CreateInstance(__uuidof(ScriptControl));
+
 	pScriptControl->put_AllowUI(VARIANT_TRUE);
     pScriptControl->put_Timeout(-1);
     VARIANT_BOOL noSafeSubset(VARIANT_FALSE);
@@ -527,10 +606,18 @@ BOOL MyPlugin_DoInit()
     ary.Add(CComVariant(g_currentDirectory));
     pScriptControl->Run(CComBSTR(L"onInit"), ary.GetSafeArrayPtr(), &ret);
 
+    WSADATA wsaData;
+    int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
+    /*if (iResult != 0) {
+        printf("WSAStartup failed: %d\n", iResult);
+        return 1;
+    }*/
+
     return TRUE;
 }
 BOOL MyPlugin_DoShutdown()
 {
+    WSACleanup();
     //OutputDebugString("MyPlugin_DoShutdown\n");
     // success
     pScriptControl->Reset();
@@ -978,7 +1065,7 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const c
     ary.Add(CComVariant(CComVariant(thispluginid)));
     ary.Add(CComVariant(CComVariant(score)));
     ary.Add(CComVariant(CComVariant(entrytype)));
-    if(tagvoidp)
+    if(tagvoidp && thispluginid==pluginid)
         ary.Add(CComVariant(CComVariant(*(CComVariant*)tagvoidp)));
     else
         ary.Add(CComVariant(CComVariant()));
@@ -1005,12 +1092,12 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTriggerV2(const char* destbuf_path, const
     ary.Add(CComVariant(CComVariant(thispluginid)));
     ary.Add(CComVariant(CComVariant(score)));
     ary.Add(CComVariant(CComVariant(entrytype)));
-    if(tagvoidp)
+    if(tagvoidp && thispluginid==pluginid)
         ary.Add(CComVariant(CComVariant(*(CComVariant*)tagvoidp)));
     else
         ary.Add(CComVariant(CComVariant()));
     ary.Add(CComVariant(CComVariant(triggermode)));
-    pScriptControl->Run(CComBSTR(L"onProcessTriggerV2"), ary.GetSafeArrayPtr(), &ret);
+    pScriptControl->Run(CComBSTR(L"onProcessTrigger"), ary.GetSafeArrayPtr(), &ret);
 
     static const int TRIGGER_HANDLED=1;
     static const int TRIGGER_CLOSE=2;

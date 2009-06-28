@@ -26,6 +26,21 @@ interface IFARR : IDispatch
     HRESULT getQueryString([out,retval] BSTR *query);
     HRESULT getObject([in] BSTR query, [out,retval] IDispatch **p);
     [vararg] HRESULT newCFunction([in] BSTR fnName, [in] int rValType, [in] SAFEARRAY(VARIANT) *pArgsTypes, [out,retval] VARIANT *retVal);
+    HRESULT newTCPSocket([in] BSTR host, [in] int port, [out,retval] IDispatch **ppSock);
+};
+
+[
+    object,
+    uuid(BA656083-8952-4c2c-BB79-D43025ED3B44),
+    dual,
+    helpstring("ITCPSocket"),
+    pointer_default(unique)
+]
+interface ITCPSocket : IDispatch
+{
+    HRESULT read([out,retval] BSTR *data);
+    HRESULT write([in] BSTR value);
+    HRESULT close();
 };
 
 [
@@ -39,4 +54,5 @@ library FARRLib
     importlib("stdole32.tlb");
     importlib("stdole2.tlb");
     interface IFARR;
+    interface ITCPSocket;
 }
