@@ -13,6 +13,8 @@ interface ILibFFITest : IDispatch
     [vararg] HRESULT newCFunction([in] BSTR fnName, [in] INT rValType, [in] SAFEARRAY(VARIANT) *pArgsTypes, [out,retval] VARIANT *retVal);
              HRESULT malloc([in] INT s, [out,retval] INT *ptr);
              HRESULT free([in] INT s);
+             HRESULT setPtr([in] int p, [in] int i, [in] VARIANT v);
+             HRESULT getPtr([in] int p, [in] int i, [out,retval] int *v);
 };
 
 [

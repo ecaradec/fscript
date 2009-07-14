@@ -155,6 +155,16 @@ struct FFIObject : CComObjectRoot,
         ::free((void*)ptr);
         return S_OK;
     }
+    STDMETHOD(setPtr)(int ptr, int i, VARIANT v)
+    {
+        *(int*)(((char*)ptr)[i])=v.intVal;
+        return S_OK;
+    }
+    STDMETHOD(getPtr)(int ptr, int i, int *v)
+    {
+        *v=*(int*)((char*)ptr);
+        return S_OK;
+    }
 };
 
 
