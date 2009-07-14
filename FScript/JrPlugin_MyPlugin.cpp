@@ -1014,7 +1014,7 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const c
 
 PREFUNCDEF BOOL EFuncName_Allow_ProcessTriggerV2(const char* destbuf_path, const char* destbuf_caption, const char* destbuf_groupname, int pluginid, int thispluginid, int score, E_EntryTypeT entrytype, void* tagvoidp, BOOL *closeafterp, int triggermode)
 {
-    CComVariant ret;
+    CComVariant retV1, retV2;
     CComSafeArray<VARIANT> ary;
     ary.Add(CComVariant(CComVariant(destbuf_path)));
     ary.Add(CComVariant(CComVariant(destbuf_caption)));
@@ -1027,9 +1027,17 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTriggerV2(const char* destbuf_path, const
         ary.Add(CComVariant(CComVariant(*(CComVariant*)tagvoidp)));
     else
         ary.Add(CComVariant(CComVariant()));
-    ary.Add(CComVariant(CComVariant(triggermode)));
-    pScriptControl->Run(CComBSTR(L"onProcessTrigger"), ary.GetSafeArrayPtr(), &ret);
 
+    // EFuncName_Allow_ProcessTrigger is not called anymore if the plugin support EFuncName_Allow_ProcessTriggerV2
+    // this emulate the old behavior of onProcessTrigger
+    if(triggermode==0)
+        pScriptControl->Run(CComBSTR(L"onProcessTrigger"), ary.GetSafeArrayPtr(), &retV1);
+
+    // add extra parameters for triggermode
+    ary.Add(CComVariant(CComVariant(triggermode)));
+    pScriptControl->Run(CComBSTR(L"onProcessTriggerV2"), ary.GetSafeArrayPtr(), &retV2);
+
+    CComVariant &ret=(retV1.vt!=VT_UNKNOWN)?retV1:retV2;
     static const int TRIGGER_HANDLED=1;
     static const int TRIGGER_CLOSE=2;
     if(ret.vt==VT_I4) {
