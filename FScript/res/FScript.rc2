@@ -6,8 +6,44 @@
 #error this file is not editable by Microsoft Visual C++
 #endif //APSTUDIO_INVOKED
 
-
+#include "..\VersionNb.h"
 /////////////////////////////////////////////////////////////////////////////
 // Add manually edited resources here...
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
 
+VS_VERSION_INFO     VERSIONINFO
+  FILEVERSION       _FILEVERSION_
+  PRODUCTVERSION    _PRODUCTVERSION_
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+        BLOCK "040904e4"
+		BEGIN 
+            VALUE "CompanyName", "Emmanuel Caradec"
+            VALUE "FileDescription", "FScript"
+			VALUE "FileVersion",     _FILEVERSIONSTR_
+			VALUE "InternalName",    "FScript.dll"
+            VALUE "LegalCopyright", "All rights reserved."
+			VALUE "OriginalFilename","FScript.dll"
+            VALUE "ProductName", "FScript"
+			VALUE "ProductVersion",  _PRODUCTVERSIONSTR_
+		END
+	END
+	BLOCK "VarFileInfo" 
+	BEGIN 
+		VALUE "Translation", 0x0409, 1252
+    END
+END
 /////////////////////////////////////////////////////////////////////////////

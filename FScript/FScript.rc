@@ -56,43 +56,7 @@ END
 LANGUAGE 9, 1
 #pragma code_page(1252)
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// Version
-//
 
-VS_VERSION_INFO     VERSIONINFO
-  FILEVERSION       1,19
-  PRODUCTVERSION    1,19
- FILEFLAGSMASK 0x3fL
-#ifdef _DEBUG
- FILEFLAGS 0x1L
-#else
- FILEFLAGS 0x0L
-#endif
- FILEOS 0x4L
- FILETYPE 0x2L
- FILESUBTYPE 0x0L
-BEGIN
-	BLOCK "StringFileInfo"
-	BEGIN
-        BLOCK "040904e4"
-		BEGIN 
-            VALUE "CompanyName", "Emmanuel Caradec"
-            VALUE "FileDescription", "FScript"
-			VALUE "FileVersion",     "1.19"
-			VALUE "InternalName",    "FScript.dll"
-            VALUE "LegalCopyright", "All rights reserved."
-			VALUE "OriginalFilename","FScript.dll"
-            VALUE "ProductName", "FScript"
-			VALUE "ProductVersion",  "1.19"
-		END
-	END
-	BLOCK "VarFileInfo" 
-	BEGIN 
-		VALUE "Translation", 0x0409, 1252
-    END
-END
 
 #endif
 #ifndef APSTUDIO_INVOKED

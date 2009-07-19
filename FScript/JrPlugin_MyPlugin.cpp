@@ -1,19 +1,6 @@
 // JrPlugin_MyPlugin
 // VS wants this
 #include "stdafx.h"
-// System includes
-#include <windows.h>
-#include <stdio.h>
-#include <io.h>
-#include <atlbase.h>
-#include <atlcom.h>
-#include <atlstr.h>
-#include "atlsafe.h"
-#include <vector>
-#include <map>
-#include <winsock2.h>
-#include <Ws2tcpip.h>
-#include <Wspiapi.h>
 
 #include "fscript_h.h"
 #include "fscript_i.c"
@@ -452,6 +439,7 @@ void InitializeScriptControl()
     SetWindowLong(g_comHwnd, GWL_WNDPROC, (UINT_PTR)ComWndProc);
 }
 
+
 void ShowOptionDialog() {
     if(g_optionDlgHwnd!=0) {
         SetForegroundWindow(g_optionDlgHwnd);
@@ -506,7 +494,7 @@ void ShowOptionDialog() {
     SetWindowLong(hwnd, GWL_WNDPROC, (UINT_PTR)ButtonProc);
     y+=30;
     
-    CPoint pos;
+    POINT pos;
     GetCursorPos(&pos);
     HMONITOR hmon=MonitorFromPoint(pos, MONITOR_DEFAULTTONEAREST);
     MONITORINFO mi;

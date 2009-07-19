@@ -23,12 +23,6 @@
 #include "JrPlugin_MyPlugin.h"
 //-----------------------------------------------------------------------
 
-
-
-
-
-
-
 //-----------------------------------------------------------------------
 // global callback data we need to remember when we are initialized
 Fp_GlobalPluginCallback_GetStrVal callbackfp_get_strval=NULL;
