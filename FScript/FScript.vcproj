@@ -101,7 +101,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\FindAndRunRobotDev\Plugins\FScriptTest\FScript.dll&quot;"
+				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\FindAndRunRobotDev\Plugins\vbsFScriptSample\FScript.dll&quot;"
 			/>
 		</Configuration>
 		<Configuration

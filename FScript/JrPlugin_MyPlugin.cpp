@@ -995,6 +995,9 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTrigger(const char* destbuf_path, const c
     if(ret.vt==VT_I4) {
         *closeafterp=((ret.intVal&TRIGGER_CLOSE)!=0);
         return ((ret.intVal&TRIGGER_HANDLED)!=0);
+    } else if(ret.vt==VT_I2) {
+        *closeafterp=((ret.iVal&TRIGGER_CLOSE)!=0);
+        return ((ret.iVal&TRIGGER_HANDLED)!=0);
     }
 
     return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
@@ -1018,12 +1021,13 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTriggerV2(const char* destbuf_path, const
 
     // EFuncName_Allow_ProcessTrigger is not called anymore if the plugin support EFuncName_Allow_ProcessTriggerV2
     // this emulate the old behavior of onProcessTrigger
+    HRESULT hr;
     if(triggermode==0)
-        pScriptControl->Run(CComBSTR(L"onProcessTrigger"), ary.GetSafeArrayPtr(), &retV1);
+        hr=pScriptControl->Run(CComBSTR(L"onProcessTrigger"), ary.GetSafeArrayPtr(), &retV1);
 
     // add extra parameters for triggermode
     ary.Add(CComVariant(CComVariant(triggermode)));
-    pScriptControl->Run(CComBSTR(L"onProcessTriggerV2"), ary.GetSafeArrayPtr(), &retV2);
+    hr=pScriptControl->Run(CComBSTR(L"onProcessTriggerV2"), ary.GetSafeArrayPtr(), &retV2);
 
     CComVariant &ret=(retV1.vt!=VT_UNKNOWN)?retV1:retV2;
     static const int TRIGGER_HANDLED=1;
@@ -1031,6 +1035,9 @@ PREFUNCDEF BOOL EFuncName_Allow_ProcessTriggerV2(const char* destbuf_path, const
     if(ret.vt==VT_I4) {
         *closeafterp=((ret.intVal&TRIGGER_CLOSE)!=0);
         return ((ret.intVal&TRIGGER_HANDLED)!=0);
+    } else if(ret.vt==VT_I2) {
+        *closeafterp=((ret.iVal&TRIGGER_CLOSE)!=0);
+        return ((ret.iVal&TRIGGER_HANDLED)!=0);
     }
 
     return ret.vt==VT_BOOL && ret.boolVal==VARIANT_TRUE;
